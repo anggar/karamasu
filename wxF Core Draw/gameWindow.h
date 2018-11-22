@@ -10,8 +10,11 @@ public:
 	void onMouseLeftUp(wxMouseEvent &event);
 	void onMouseLeftDown(wxMouseEvent &event);
 	void onMouseMotion(wxMouseEvent &event);
+	void OnPaint(wxPaintEvent &event);
 	~gameWindow();
 private:
+	wxBitmap *backgroundImage = nullptr;
+	void LoadImageBackground();
 	wxDECLARE_EVENT_TABLE();
 };
 
