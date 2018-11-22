@@ -27,7 +27,7 @@ gameWindow::gameWindow(gameFrame *parent)
 void gameWindow::LoadImageBackground() {
 	wxStandardPaths &stdPaths = wxStandardPaths::Get();
 	wxString fileLocation = stdPaths.GetExecutablePath();
-	fileLocation = wxFileName(fileLocation).GetPath() + wxT("\\..\\Asset\\BG\\BG_YAMA_01.jpg");
+	fileLocation = wxFileName(fileLocation).GetPath() + wxT("\\..\\Asset\\BG_YAMA_01.jpg");
 	wxImage image(fileLocation, wxBITMAP_TYPE_JPEG);
 
 	this->backgroundImage = new wxBitmap(image);
