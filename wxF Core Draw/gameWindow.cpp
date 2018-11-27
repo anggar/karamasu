@@ -5,9 +5,7 @@
 
 BEGIN_EVENT_TABLE(gameWindow, wxWindow)
 	EVT_PAINT(gameWindow::OnPaint)
-	EVT_LEFT_DOWN(gameWindow::onMouseLeftDown)
-	EVT_LEFT_UP(gameWindow::onMouseLeftUp)
-	EVT_MOTION(gameWindow::onMouseMotion)
+	EVT_MOUSE_EVENTS(gameWindow::onMouseEvent)
 END_EVENT_TABLE()
 
 
@@ -42,16 +40,42 @@ void gameWindow::OnPaint(wxPaintEvent &event) {
 
 	if (backgroundImage != nullptr)
 		pdc.DrawBitmap(*backgroundImage, wxPoint(0, 0), true);
+
+	pdc.SetBrush(*wxWHITE_BRUSH);
+
+	/*for (int i = 0; i < 6; i++) {
+		for (int j = 0; j < 6; j++) {
+			pdc.DrawRoundedRectangle(wxPoint(10 + 55 * i, 80 + 55*j), wxSize(50, 50), 5);
+		}
+	}*/
 }
 
-void gameWindow::onMouseLeftDown(wxMouseEvent &event) {
-}
-
-void gameWindow::onMouseLeftUp(wxMouseEvent &event) {
-}
-
-void gameWindow::onMouseMotion(wxMouseEvent &event) {
+void gameWindow::onMouseEvent(wxMouseEvent &event) {
 	wxClientDC dc(this);
+	dc.SetBrush(*wxWHITE_BRUSH);
+
+	for (int i = 0; i < 6; i++) {
+		for (int j = 0; j < 6; j++) {
+			dc.DrawRoundedRectangle(wxPoint(10 + 55 * i, 80 + 55*j), wxSize(50, 50), 5);
+		}
+	}	
+	/*int pos_x = (event.GetPosition().x - 10) / 55;
+	int pos_y = (event.GetPosition().y - 80) / 55;
+
+	if ((pos_x < 6 && pos_x >= 0) && (pos_y < 6 && pos_y >= 0)) {
+		dc.SetBrush(*wxBLUE_BRUSH);
+		dc.DrawRoundedRectangle(wxPoint(10 + 55 * pos_x, 80 + 55 * pos_y), wxSize(50, 50), 5);
+	}*/
+
+	if (event.Moving()) {
+		dc.SetBrush(*wxBLUE_BRUSH);
+		dc.FloodFill(event.GetPosition(), *wxWHITE, wxFLOOD_SURFACE);
+	}
+	else if (event.Dragging() || event.LeftDown()) {
+		dc.SetBrush(*wxRED_BRUSH);
+		dc.FloodFill(event.GetPosition(), *wxWHITE, wxFLOOD_SURFACE);
+	}
+
 	dc.SetPen(wxPen(wxColour(*wxRED)));
 	dc.DrawPoint(event.GetPosition());
 	dc.SetPen(wxPen(wxNullPen));

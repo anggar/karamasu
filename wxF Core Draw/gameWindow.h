@@ -7,9 +7,7 @@ class gameWindow
 {
 public:
 	gameWindow(gameFrame *parent);
-	void onMouseLeftUp(wxMouseEvent &event);
-	void onMouseLeftDown(wxMouseEvent &event);
-	void onMouseMotion(wxMouseEvent &event);
+	void onMouseEvent(wxMouseEvent &event);
 	void OnPaint(wxPaintEvent &event);
 	~gameWindow();
 private:
