@@ -9,6 +9,9 @@ class gameFrame
 private:
 	gameWindow *canvas;
 	void InitComponents();
+	void OnButtonClick(wxCommandEvent &event) {
+
+	}
 public:
 	gameFrame(const wxString& title);
 	~gameFrame();

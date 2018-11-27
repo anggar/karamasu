@@ -41,13 +41,6 @@ void gameWindow::OnPaint(wxPaintEvent &event) {
 	if (backgroundImage != nullptr)
 		pdc.DrawBitmap(*backgroundImage, wxPoint(0, 0), true);
 
-	pdc.SetBrush(*wxWHITE_BRUSH);
-
-	/*for (int i = 0; i < 6; i++) {
-		for (int j = 0; j < 6; j++) {
-			pdc.DrawRoundedRectangle(wxPoint(10 + 55 * i, 80 + 55*j), wxSize(50, 50), 5);
-		}
-	}*/
 }
 
 void gameWindow::onMouseEvent(wxMouseEvent &event) {

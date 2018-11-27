@@ -6,6 +6,7 @@ gameFrame::gameFrame(const wxString& title)
 	: wxFrame(NULL, wxID_ANY, title)
 {
 	this->InitComponents();
+	
 }
 
 void gameFrame::InitComponents() {
