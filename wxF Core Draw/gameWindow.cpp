@@ -4,6 +4,7 @@
 #include <wx/stdpaths.h>
 #include <wx/filename.h>
 #include <wx/arrimpl.cpp>
+#define TIMER_ID 1945
 
 WX_DECLARE_OBJARRAY(Box, BoxArr);
 WX_DECLARE_OBJARRAY(BoxArr, BoxArray);
@@ -12,7 +13,8 @@ WX_DEFINE_OBJARRAY(BoxArray);
 
 BEGIN_EVENT_TABLE(GameWindow, wxWindow)
 	EVT_PAINT(GameWindow::OnPaint)
-	EVT_MOUSE_EVENTS(GameWindow::onMouseEvent)
+	EVT_TIMER(TIMER_ID, GameWindow::OnTimer)
+	EVT_MOUSE_EVENTS(GameWindow::OnMouseEvent)
 END_EVENT_TABLE()
 
 GameWindow::GameWindow(SwitchFrame *parent)
@@ -55,6 +57,13 @@ GameWindow::~GameWindow()
 {
 }
  
+void GameWindow::OnTimer(wxTimerEvent &event) {
+	static int counter = 0;
+	wxMessageOutputDebug().Printf("%d", counter++);
+
+	Refresh();
+}
+
 void GameWindow::OnPaint(wxPaintEvent &event) {
 	wxPaintDC pdc(this);
 
@@ -69,7 +78,7 @@ void GameWindow::OnPaint(wxPaintEvent &event) {
 	}
 }
 
-void GameWindow::onMouseEvent(wxMouseEvent &event) {
+void GameWindow::OnMouseEvent(wxMouseEvent &event) {
 	wxClientDC dc(this);
 	int curstate = 0;
 
@@ -78,6 +87,12 @@ void GameWindow::onMouseEvent(wxMouseEvent &event) {
 	int pos_x = (event.GetPosition().x - 10) / 55;
 	int pos_y = (event.GetPosition().y - 80) / 55;
 
+	for (int i = 0; i < 6; i++) {
+		for (int j = 0; j < 6; j++) {
+			this->boxes->Item(i).Item(j).ChangeState(0);
+		}
+	}
+
 	if (event.Moving()) {
 		curstate = 0;
 	}
@@ -85,13 +100,14 @@ void GameWindow::onMouseEvent(wxMouseEvent &event) {
 		curstate = 2;
 	}
 
+	this->boxes->Item(pos_x).Item(pos_y).ChangeState(curstate);
 	if ((pos_x < 6 && pos_x >= 0) && (pos_y < 6 && pos_y >= 0)) {
 		//dc.DrawRoundedRectangle(wxPoint(10 + 55 * pos_x, 80 + 55 * pos_y), wxSize(50, 50), 5);
 
 		if(curstate !=  2) curstate = 1;
 		this->boxes->Item(pos_x).Item(pos_y).ChangeState(curstate);
+		Refresh();
 	}
-
 	/*if (event.Moving()) {
 		dc.SetBrush(*wxBLUE_BRUSH);
 		dc.FloodFill(event.GetPosition(), *wxWHITE, wxFLOOD_SURFACE);

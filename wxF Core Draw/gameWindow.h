@@ -9,10 +9,12 @@ class GameWindow
 {
 public:
 	GameWindow(SwitchFrame *parent);
-	void onMouseEvent(wxMouseEvent &event);
+	void OnMouseEvent(wxMouseEvent &event);
+	void OnTimer(wxTimerEvent &event);
 	void OnPaint(wxPaintEvent &event);
 	~GameWindow();
 private:
+	wxTimer *timer;
 	wxBitmap *backgroundImage = nullptr;
 	
 	BoxArray *boxes;
