@@ -1,15 +1,15 @@
 #pragma once
 #include "wx/wx.h"
-#include "gameFrame.h"
+#include "SwitchFrame.h"
 
-class gameWindow
+class GameWindow
 	: public wxWindow
 {
 public:
-	gameWindow(gameFrame *parent);
+	GameWindow(SwitchFrame *parent);
 	void onMouseEvent(wxMouseEvent &event);
 	void OnPaint(wxPaintEvent &event);
-	~gameWindow();
+	~GameWindow();
 private:
 	wxBitmap *backgroundImage = nullptr;
 	void LoadImageBackground();
