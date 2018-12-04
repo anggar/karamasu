@@ -9,17 +9,19 @@ private:
 	wxBitmap *logo;
 	wxBitmap *backgroundMenu;
 	wxButton *playButton;
-	//wxButton *exitButton;
+	wxBitmap *playButton1;
+	wxBitmap *aboutButton1;
 	wxButton *aboutButton;
 	void LoadImageLogo();
 	void LoadBackgroundMenu();
+	void LoadPlayButton();
+	void LoadAboutButton();
 	SwitchFrame *parentFrame;
 
 public:
 	MainWindow(SwitchFrame *parent);
-	void PlayButtonClick(wxCommandEvent &event);
+	void OnMouseLeftDown(wxMouseEvent &event);
 	void OnPaint(wxPaintEvent &event);
-	void AboutButtonClick(wxCommandEvent &event);
 	~MainWindow();
 	wxDECLARE_EVENT_TABLE();
 };

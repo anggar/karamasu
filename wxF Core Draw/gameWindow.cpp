@@ -7,7 +7,6 @@ BEGIN_EVENT_TABLE(GameWindow, wxWindow)
 	EVT_MOUSE_EVENTS(GameWindow::onMouseEvent)
 END_EVENT_TABLE()
 
-
 GameWindow::GameWindow(SwitchFrame *parent)
 	: wxWindow(parent, wxID_ANY)
 {

@@ -4,8 +4,7 @@
 
 BEGIN_EVENT_TABLE(MainWindow, wxWindow)
 	EVT_PAINT(MainWindow::OnPaint)
-	EVT_BUTTON(1001, MainWindow::AboutButtonClick)
-	EVT_BUTTON(1002, MainWindow::PlayButtonClick)
+	EVT_LEFT_DOWN(MainWindow::OnMouseLeftDown)
 END_EVENT_TABLE()
 
 void MainWindow::LoadImageLogo()
@@ -28,6 +27,26 @@ void MainWindow::LoadBackgroundMenu()
 	this->backgroundMenu = new wxBitmap(image);
 }
 
+void MainWindow::LoadPlayButton()
+{
+	wxStandardPaths &stdPaths = wxStandardPaths::Get();
+	wxString fileLocation = stdPaths.GetExecutablePath();
+	fileLocation = wxFileName(fileLocation).GetPath() + wxT("\\..\\Asset\\Play-Button-Icon-new.png");
+	wxImage image(fileLocation, wxBITMAP_TYPE_PNG);
+
+	this->playButton1 = new wxBitmap(image);
+}
+
+void MainWindow::LoadAboutButton()
+{
+	wxStandardPaths &stdPaths = wxStandardPaths::Get();
+	wxString fileLocation = stdPaths.GetExecutablePath();
+	fileLocation = wxFileName(fileLocation).GetPath() + wxT("\\..\\Asset\\About-Button-Icon-new.png");
+	wxImage image(fileLocation, wxBITMAP_TYPE_PNG);
+
+	this->aboutButton1 = new wxBitmap(image);
+}
+
 MainWindow::MainWindow(SwitchFrame * parent)
 	: wxWindow(parent, wxID_ANY), parentFrame(parent)
 {
@@ -43,11 +62,13 @@ MainWindow::MainWindow(SwitchFrame * parent)
 
 	this->LoadBackgroundMenu();
 	this->LoadImageLogo();
+	this->LoadPlayButton();
+	this->LoadAboutButton();
 }
 
-void MainWindow::PlayButtonClick(wxCommandEvent & event)
+void MainWindow::OnMouseLeftDown(wxMouseEvent & event)
 {
-	this->parentFrame->ShowGameWindow();
+	
 }
 
 void MainWindow::OnPaint(wxPaintEvent & event)
@@ -57,17 +78,18 @@ void MainWindow::OnPaint(wxPaintEvent & event)
 		pdc.DrawBitmap(*backgroundMenu, wxPoint(0, 0), true);
 	}
 	if (logo != nullptr) {
-		pdc.DrawBitmap(*logo, wxPoint(30, 200), true); // y = 37
+		pdc.DrawBitmap(*logo, wxPoint(30, 50), true); // y = 37
+	}
+	if (this->playButton1 != nullptr) {
+		pdc.DrawBitmap(*playButton1, wxPoint(95, 200), true);
+	}
+	if (this->aboutButton1 != nullptr) {
+		pdc.DrawBitmap(*aboutButton1, wxPoint(95, 410), true);
 	}
 
-	this->playButton = new wxButton(this, 1002, wxT("PLAY"), wxPoint(125, 350), wxDefaultSize); // y - 30 390
-	//this->aboutButton = new wxButton(this, wxID_ANY, wxT("ABOUT"), wxPoint(125, 425), wxDefaultSize);
-	this->aboutButton = new wxButton(this, 1001, wxT("ABOUT"), wxPoint(125, 395), wxDefaultSize); // y 425
-}
-
-void MainWindow::AboutButtonClick(wxCommandEvent & event)
-{
-	wxMessageBox(wxT("Karamasu Version 1.0\nMade By Anggar and Bayu\n"));
+	//this->playButton = new wxButton(this, 1002, wxT("PLAY"), wxPoint(125, 350), wxDefaultSize); // y - 30 390
+	////this->aboutButton = new wxButton(this, wxID_ANY, wxT("ABOUT"), wxPoint(125, 425), wxDefaultSize);
+	//this->aboutButton = new wxButton(this, 1001, wxT("ABOUT"), wxPoint(125, 395), wxDefaultSize); // y 425
 }
 
 MainWindow::~MainWindow()
