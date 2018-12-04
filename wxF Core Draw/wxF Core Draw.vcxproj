@@ -19,26 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
-    <ClCompile Include="Box.cpp" />
-    <ClCompile Include="gameFrame.cpp" />
-    <ClCompile Include="gameWindow.cpp" />
-=======
     <ClCompile Include="GameWindow.cpp" />
->>>>>>> 6446755cfa7dff629d2f8b2bf24fa4136e7f7d5d
     <ClCompile Include="Kanji.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="SwitchFrame.cpp" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
-    <ClInclude Include="Box.h" />
-    <ClInclude Include="gameFrame.h" />
-    <ClInclude Include="gameWindow.h" />
-=======
     <ClInclude Include="GameWindow.h" />
->>>>>>> 6446755cfa7dff629d2f8b2bf24fa4136e7f7d5d
     <ClInclude Include="Kanji.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="SwitchFrame.h" />
