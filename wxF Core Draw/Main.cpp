@@ -17,6 +17,7 @@ bool MainApp::OnInit() {
 	
 	SwitchFrame *frame = new SwitchFrame(wxT("THE GAME"));
 	frame->Show(true);
+	frame->ShowGameWindow();
 	return true;
 }
 

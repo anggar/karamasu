@@ -6,12 +6,15 @@
 class Box
 {
 public:
-	Box(Kanji kanji, int type = 0);
-	void Draw(wxPaintDC &dc);
+	Box(Kanji *kanji, int type, int posx, int posy, int state);
+	void Draw(wxPaintDC &dc, const wxBrush &br);
+	void ChangeState(int state);
+
 	~Box();
 private:
+	int state;
 	wxPoint position;
-	Kanji kanji;
+	Kanji *kkanji;
 	int type = 0;
 };
 

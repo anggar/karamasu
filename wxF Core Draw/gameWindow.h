@@ -2,6 +2,8 @@
 #include "wx/wx.h"
 #include "SwitchFrame.h"
 
+class BoxArray;
+
 class GameWindow
 	: public wxWindow
 {
@@ -12,6 +14,8 @@ public:
 	~GameWindow();
 private:
 	wxBitmap *backgroundImage = nullptr;
+	
+	BoxArray *boxes;
 	void LoadImageBackground();
 	wxDECLARE_EVENT_TABLE();
 };

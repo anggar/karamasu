@@ -1,6 +1,14 @@
-#include "GameWindow.h"
+﻿#include "GameWindow.h"
+#include "Box.h"
+#include "Kanji.h"
 #include <wx/stdpaths.h>
 #include <wx/filename.h>
+#include <wx/arrimpl.cpp>
+
+WX_DECLARE_OBJARRAY(Box, BoxArr);
+WX_DECLARE_OBJARRAY(BoxArr, BoxArray);
+WX_DEFINE_OBJARRAY(BoxArr);
+WX_DEFINE_OBJARRAY(BoxArray);
 
 BEGIN_EVENT_TABLE(GameWindow, wxWindow)
 	EVT_PAINT(GameWindow::OnPaint)
@@ -18,6 +26,20 @@ GameWindow::GameWindow(SwitchFrame *parent)
 	wxClientDC dc(this);
 
 	this->LoadImageBackground();
+
+	this->boxes = new BoxArray();
+
+	Kanji *teskanji = new Kanji('A', "rain");
+
+	BoxArr temparr;
+
+	for (int i = 0; i < 6; i++) {
+		for (int j = 0; j < 6; j++) {
+			temparr.Add(new Box(teskanji, 0, i, j, 0));
+		}
+		boxes->Add(temparr);
+		temparr.Clear();
+	}
 }
 
 void GameWindow::LoadImageBackground() {
@@ -39,33 +61,45 @@ void GameWindow::OnPaint(wxPaintEvent &event) {
 	if (backgroundImage != nullptr)
 		pdc.DrawBitmap(*backgroundImage, wxPoint(0, 0), true);
 
+	for (int i = 0; i < 6; i++) {
+		auto temp = boxes->Item(i);
+		for (int j = 0; j < 6; j++) {
+			temp.Item(j).Draw(pdc, *wxWHITE_BRUSH);
+		}
+	}
 }
 
 void GameWindow::onMouseEvent(wxMouseEvent &event) {
 	wxClientDC dc(this);
+	int curstate = 0;
+
 	dc.SetBrush(*wxWHITE_BRUSH);
 
-	for (int i = 0; i < 6; i++) {
-		for (int j = 0; j < 6; j++) {
-			dc.DrawRoundedRectangle(wxPoint(10 + 55 * i, 80 + 55*j), wxSize(50, 50), 5);
-		}
-	}	
-	/*int pos_x = (event.GetPosition().x - 10) / 55;
+	int pos_x = (event.GetPosition().x - 10) / 55;
 	int pos_y = (event.GetPosition().y - 80) / 55;
 
-	if ((pos_x < 6 && pos_x >= 0) && (pos_y < 6 && pos_y >= 0)) {
-		dc.SetBrush(*wxBLUE_BRUSH);
-		dc.DrawRoundedRectangle(wxPoint(10 + 55 * pos_x, 80 + 55 * pos_y), wxSize(50, 50), 5);
-	}*/
-
 	if (event.Moving()) {
+		curstate = 0;
+	}
+	else if (event.Dragging() || event.LeftDown()) {
+		curstate = 2;
+	}
+
+	if ((pos_x < 6 && pos_x >= 0) && (pos_y < 6 && pos_y >= 0)) {
+		//dc.DrawRoundedRectangle(wxPoint(10 + 55 * pos_x, 80 + 55 * pos_y), wxSize(50, 50), 5);
+
+		if(curstate !=  2) curstate = 1;
+		this->boxes->Item(pos_x).Item(pos_y).ChangeState(curstate);
+	}
+
+	/*if (event.Moving()) {
 		dc.SetBrush(*wxBLUE_BRUSH);
 		dc.FloodFill(event.GetPosition(), *wxWHITE, wxFLOOD_SURFACE);
 	}
 	else if (event.Dragging() || event.LeftDown()) {
 		dc.SetBrush(*wxRED_BRUSH);
 		dc.FloodFill(event.GetPosition(), *wxWHITE, wxFLOOD_SURFACE);
-	}
+	}*/
 
 	/*
 	dc.SetPen(wxPen(wxColour(*wxRED)));
