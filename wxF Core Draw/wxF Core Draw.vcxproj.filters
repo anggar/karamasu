@@ -27,10 +27,14 @@
     <ClCompile Include="Kanji.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< cfcd1a827bffd92d9694b55c4ec7fa8d39210816
     <ClCompile Include="MainFrame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MainWindow.cpp">
+=======
+    <ClCompile Include="Box.cpp">
+>>>>>>> Refactor some code
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,10 +48,14 @@
     <ClInclude Include="Kanji.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< cfcd1a827bffd92d9694b55c4ec7fa8d39210816
     <ClInclude Include="MainFrame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MainWindow.h">
+=======
+    <ClInclude Include="Box.h">
+>>>>>>> Refactor some code
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

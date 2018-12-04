@@ -1,17 +1,16 @@
 #pragma once
-#include <string>
+#include <wx/string.h>
 #include "wx/dynarray.h"
-
-using std::string;
 
 class Kanji
 {
 public:
-	Kanji(char utf, string meaning);
+	Kanji(char utf, wxString meaning);
 	~Kanji();
+	wxString GetChar();
 
 private:
 	char utf;
-	string meaning;
+	wxString meaning;
 };
 

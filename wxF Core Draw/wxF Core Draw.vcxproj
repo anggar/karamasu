@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Box.cpp" />
     <ClCompile Include="gameFrame.cpp" />
     <ClCompile Include="gameWindow.cpp" />
     <ClCompile Include="Kanji.cpp" />
@@ -27,6 +28,7 @@
     <ClCompile Include="MainWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Box.h" />
     <ClInclude Include="gameFrame.h" />
     <ClInclude Include="gameWindow.h" />
     <ClInclude Include="Kanji.h" />
