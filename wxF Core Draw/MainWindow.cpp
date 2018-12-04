@@ -5,6 +5,7 @@
 BEGIN_EVENT_TABLE(MainWindow, wxWindow)
 	EVT_PAINT(MainWindow::OnPaint)
 	EVT_BUTTON(1001, MainWindow::AboutButtonClick)
+	EVT_BUTTON(1002, MainWindow::PlayButtonClick)
 END_EVENT_TABLE()
 
 void MainWindow::LoadImageLogo()
@@ -27,8 +28,8 @@ void MainWindow::LoadBackgroundMenu()
 	this->backgroundMenu = new wxBitmap(image);
 }
 
-MainWindow::MainWindow(MainFrame * parent)
-	: wxWindow(parent, wxID_ANY)
+MainWindow::MainWindow(SwitchFrame * parent)
+	: wxWindow(parent, wxID_ANY), parentFrame(parent)
 {
 	this->SetBackgroundColour(wxColour(*wxWHITE));
 
@@ -42,6 +43,11 @@ MainWindow::MainWindow(MainFrame * parent)
 
 	this->LoadBackgroundMenu();
 	this->LoadImageLogo();
+}
+
+void MainWindow::PlayButtonClick(wxCommandEvent & event)
+{
+	this->parentFrame->ShowGameWindow();
 }
 
 void MainWindow::OnPaint(wxPaintEvent & event)

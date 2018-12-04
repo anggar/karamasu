@@ -1,6 +1,9 @@
-#include "wx/wx.h"
-#include "gameFrame.h"
-#include "MainFrame.h"
+#include "SwitchFrame.h"
+#include "wx/wxprec.h"
+
+#ifndef WX_PRECOMP
+	#include "wx/wx.h"
+#endif
 
 class MainApp : public wxApp {
 public:
@@ -12,8 +15,7 @@ IMPLEMENT_APP(MainApp)
 
 bool MainApp::OnInit() {
 	
-	//gameFrame *frame = new gameFrame(wxT("THE GAME"));
-	MainFrame *frame = new MainFrame(wxT("THE GAME"));
+	SwitchFrame *frame = new SwitchFrame(wxT("THE GAME"));
 	frame->Show(true);
 	return true;
 }

@@ -1,15 +1,14 @@
-#include "gameWindow.h"
+#include "GameWindow.h"
 #include <wx/stdpaths.h>
 #include <wx/filename.h>
 
-
-BEGIN_EVENT_TABLE(gameWindow, wxWindow)
-	EVT_PAINT(gameWindow::OnPaint)
-	EVT_MOUSE_EVENTS(gameWindow::onMouseEvent)
+BEGIN_EVENT_TABLE(GameWindow, wxWindow)
+	EVT_PAINT(GameWindow::OnPaint)
+	EVT_MOUSE_EVENTS(GameWindow::onMouseEvent)
 END_EVENT_TABLE()
 
 
-gameWindow::gameWindow(gameFrame *parent)
+GameWindow::GameWindow(SwitchFrame *parent)
 	: wxWindow(parent, wxID_ANY)
 {
 	this->SetBackgroundColour(wxColour(*wxLIGHT_GREY));
@@ -22,7 +21,7 @@ gameWindow::gameWindow(gameFrame *parent)
 	this->LoadImageBackground();
 }
 
-void gameWindow::LoadImageBackground() {
+void GameWindow::LoadImageBackground() {
 	wxStandardPaths &stdPaths = wxStandardPaths::Get();
 	wxString fileLocation = stdPaths.GetExecutablePath();
 	fileLocation = wxFileName(fileLocation).GetPath() + wxT("\\..\\Asset\\BG_YAMA_01.jpg");
@@ -31,11 +30,11 @@ void gameWindow::LoadImageBackground() {
 	this->backgroundImage = new wxBitmap(image);
 }
 
-gameWindow::~gameWindow()
+GameWindow::~GameWindow()
 {
 }
  
-void gameWindow::OnPaint(wxPaintEvent &event) {
+void GameWindow::OnPaint(wxPaintEvent &event) {
 	wxPaintDC pdc(this);
 
 	if (backgroundImage != nullptr)
@@ -43,7 +42,7 @@ void gameWindow::OnPaint(wxPaintEvent &event) {
 
 }
 
-void gameWindow::onMouseEvent(wxMouseEvent &event) {
+void GameWindow::onMouseEvent(wxMouseEvent &event) {
 	wxClientDC dc(this);
 	dc.SetBrush(*wxWHITE_BRUSH);
 
@@ -69,7 +68,8 @@ void gameWindow::onMouseEvent(wxMouseEvent &event) {
 		dc.FloodFill(event.GetPosition(), *wxWHITE, wxFLOOD_SURFACE);
 	}
 
+	/*
 	dc.SetPen(wxPen(wxColour(*wxRED)));
 	dc.DrawPoint(event.GetPosition());
-	dc.SetPen(wxPen(wxNullPen));
+	dc.SetPen(wxPen(wxNullPen));*/
 }

@@ -1,6 +1,6 @@
 #pragma once
 #include "wx/wx.h"
-#include "MainFrame.h"
+#include "SwitchFrame.h"
 
 class MainWindow :
 	public wxWindow
@@ -13,9 +13,11 @@ private:
 	wxButton *aboutButton;
 	void LoadImageLogo();
 	void LoadBackgroundMenu();
+	SwitchFrame *parentFrame;
 
 public:
-	MainWindow(MainFrame *parent);
+	MainWindow(SwitchFrame *parent);
+	void PlayButtonClick(wxCommandEvent &event);
 	void OnPaint(wxPaintEvent &event);
 	void AboutButtonClick(wxCommandEvent &event);
 	~MainWindow();

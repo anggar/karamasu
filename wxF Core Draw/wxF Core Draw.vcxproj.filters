@@ -18,15 +18,13 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gameFrame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="gameWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Kanji.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MainWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+<<<<<<< HEAD
 <<<<<<< cfcd1a827bffd92d9694b55c4ec7fa8d39210816
     <ClCompile Include="MainFrame.cpp">
       <Filter>Source Files</Filter>
@@ -35,19 +33,23 @@
 =======
     <ClCompile Include="Box.cpp">
 >>>>>>> Refactor some code
+=======
+    <ClCompile Include="SwitchFrame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameWindow.cpp">
+>>>>>>> 6446755cfa7dff629d2f8b2bf24fa4136e7f7d5d
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gameFrame.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gameWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Kanji.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MainWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+<<<<<<< HEAD
 <<<<<<< cfcd1a827bffd92d9694b55c4ec7fa8d39210816
     <ClInclude Include="MainFrame.h">
       <Filter>Header Files</Filter>
@@ -56,6 +58,12 @@
 =======
     <ClInclude Include="Box.h">
 >>>>>>> Refactor some code
+=======
+    <ClInclude Include="SwitchFrame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameWindow.h">
+>>>>>>> 6446755cfa7dff629d2f8b2bf24fa4136e7f7d5d
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
