@@ -7,6 +7,7 @@ void SwitchFrame::fitWindowSize()
 	this->boxSizer->Fit(this);
 	this->boxSizer->SetSizeHints(this);
 	this->SetSize(wxSize(360, 640));
+	this->SetSizeHints(wxSize(360, 640), wxSize(360, 640));
 	this->Layout();
 }
 

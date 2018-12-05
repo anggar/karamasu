@@ -27,26 +27,6 @@ void MainWindow::LoadBackgroundMenu()
 	this->backgroundMenu = new wxBitmap(image);
 }
 
-void MainWindow::LoadPlayButton()
-{
-	wxStandardPaths &stdPaths = wxStandardPaths::Get();
-	wxString fileLocation = stdPaths.GetExecutablePath();
-	fileLocation = wxFileName(fileLocation).GetPath() + wxT("\\..\\Asset\\Play-Button-Icon-new.png");
-	wxImage image(fileLocation, wxBITMAP_TYPE_PNG);
-
-	this->playButton1 = new wxBitmap(image);
-}
-
-void MainWindow::LoadAboutButton()
-{
-	wxStandardPaths &stdPaths = wxStandardPaths::Get();
-	wxString fileLocation = stdPaths.GetExecutablePath();
-	fileLocation = wxFileName(fileLocation).GetPath() + wxT("\\..\\Asset\\About-Button-Icon-new.png");
-	wxImage image(fileLocation, wxBITMAP_TYPE_PNG);
-
-	this->aboutButton1 = new wxBitmap(image);
-}
-
 MainWindow::MainWindow(SwitchFrame * parent)
 	: wxWindow(parent, wxID_ANY), parentFrame(parent)
 {
@@ -60,15 +40,32 @@ MainWindow::MainWindow(SwitchFrame * parent)
 
 	wxClientDC dc(this);
 
+	// -- DEFINING THE BUTTON -- //
+	this->playBtn = new PlayButton();
+	this->aboutBtn = new AboutButton();
+
+	// -- LOAD THE LOGO AND THE BACKGROUND -- //
 	this->LoadBackgroundMenu();
 	this->LoadImageLogo();
-	this->LoadPlayButton();
-	this->LoadAboutButton();
 }
 
 void MainWindow::OnMouseLeftDown(wxMouseEvent & event)
 {
-	
+	int mouseX = event.GetX(), mouseY = event.GetY();
+
+	// -- Check if the mouse in the Play Button position -- //
+	if (playBtn != nullptr) {
+		if (playBtn->checkMouse(mouseX, mouseY))
+			parentFrame->ShowGameWindow();
+			//wxMessageOutputDebug().Printf("%s", "Play button clicked");
+	}
+
+	// -- Check if the mouse in the About Button position -- //
+	if (aboutBtn != nullptr) {
+		if (aboutBtn->checkMouse(mouseX, mouseY))
+			wxMessageBox(wxT("Karamasu The Game"), wxT("About this Game"));
+			//wxMessageOutputDebug().Printf("%s", "About button clicked");
+	}	
 }
 
 void MainWindow::OnPaint(wxPaintEvent & event)
@@ -80,16 +77,12 @@ void MainWindow::OnPaint(wxPaintEvent & event)
 	if (logo != nullptr) {
 		pdc.DrawBitmap(*logo, wxPoint(30, 50), true); // y = 37
 	}
-	if (this->playButton1 != nullptr) {
-		pdc.DrawBitmap(*playButton1, wxPoint(95, 200), true);
+	if (playBtn != nullptr) {
+		playBtn->DrawButton(pdc);
 	}
-	if (this->aboutButton1 != nullptr) {
-		pdc.DrawBitmap(*aboutButton1, wxPoint(95, 410), true);
+	if (aboutBtn != nullptr) {
+		aboutBtn->DrawButton(pdc);
 	}
-
-	//this->playButton = new wxButton(this, 1002, wxT("PLAY"), wxPoint(125, 350), wxDefaultSize); // y - 30 390
-	////this->aboutButton = new wxButton(this, wxID_ANY, wxT("ABOUT"), wxPoint(125, 425), wxDefaultSize);
-	//this->aboutButton = new wxButton(this, 1001, wxT("ABOUT"), wxPoint(125, 395), wxDefaultSize); // y 425
 }
 
 MainWindow::~MainWindow()

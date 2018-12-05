@@ -7,6 +7,9 @@
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="SwitchFrame.cpp" />
     <ClCompile Include="Box.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="PlayButton.cpp" />
+    <ClCompile Include="AboutButton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameWindow.h" />
@@ -14,5 +17,8 @@
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="SwitchFrame.h" />
     <ClInclude Include="Box.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="PlayButton.h" />
+    <ClInclude Include="AboutButton.h" />
   </ItemGroup>
 </Project>
