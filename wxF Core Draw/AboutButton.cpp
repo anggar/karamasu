@@ -15,6 +15,11 @@ AboutButton::AboutButton()
 	this->y = 410;
 
 	this->aboutButtonImage = new wxBitmap(image);
+
+	fileLocation = wxFileName(fileLocation).GetPath() + wxT("\\..\\Asset\\About-Button-Icon-new-hover.png");
+	wxImage image2(fileLocation, wxBITMAP_TYPE_PNG);
+
+	this->aboutButtonImageHover = new wxBitmap(image2);
 }
 
 
@@ -35,4 +40,8 @@ bool AboutButton::checkMouse(int x, int y)
 void AboutButton::DrawButton(wxPaintDC & pdc)
 {
 	pdc.DrawBitmap(*aboutButtonImage, wxPoint(this->x, this->y), true);
+}
+
+void AboutButton::DrawButtonHover(wxPaintDC & pdc)
+{
 }

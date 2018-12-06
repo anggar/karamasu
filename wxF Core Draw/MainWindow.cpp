@@ -1,9 +1,17 @@
 #include "MainWindow.h"
 #include "wx/stdpaths.h"
+#include "wx/arrimpl.cpp"
 #include "wx/filename.h"
+#define TIMER_ID 2000
+typedef unsigned int uint;
+
+WX_DEFINE_OBJARRAY(FlowerArray);
 
 BEGIN_EVENT_TABLE(MainWindow, wxWindow)
-	EVT_PAINT(MainWindow::OnPaint)
+EVT_PAINT(MainWindow::OnPaint)
+	EVT_TIMER(TIMER_ID, MainWindow::OnTimer)
+	EVT_BUTTON(1001, MainWindow::OnPlayClick)
+	EVT_BUTTON(1002, MainWindow::OnAboutClick)
 	EVT_LEFT_DOWN(MainWindow::OnMouseLeftDown)
 END_EVENT_TABLE()
 
@@ -28,63 +36,98 @@ void MainWindow::LoadBackgroundMenu()
 }
 
 MainWindow::MainWindow(SwitchFrame * parent)
-	: wxWindow(parent, wxID_ANY), parentFrame(parent)
+	: wxWindow(parent, wxID_ANY), switchFrame(parent)
 {
 	this->SetBackgroundColour(wxColour(*wxWHITE));
 
+	// -- CREATING IMAGE HANDLER -- //
 	wxImageHandler *pngHandler = new wxPNGHandler;
 	wxImageHandler *jpgHandler = new wxJPEGHandler;
-
 	wxImage::AddHandler(pngHandler);
 	wxImage::AddHandler(jpgHandler);
 
 	wxClientDC dc(this);
 
-	// -- DEFINING THE BUTTON -- //
-	this->playBtn = new PlayButton();
-	this->aboutBtn = new AboutButton();
+	// -- DEFINING THE BUTTON CLASS -- //
+	this->play = new PlayButton();
+	this->about = new AboutButton();
 
 	// -- LOAD THE LOGO AND THE BACKGROUND -- //
 	this->LoadBackgroundMenu();
 	this->LoadImageLogo();
+
+	// -- CREATE THE BUTTON -- //
+	PlayButton *playCast = (PlayButton*) play;
+	AboutButton *aboutCast = (AboutButton*) about;
+	
+	this->playButton = new wxBitmapButton(this, 1001, *(playCast->playButtonImage), wxPoint(playCast->x, playCast->y), wxDefaultSize, wxBORDER_NONE);
+	this->playButton->SetBitmapCurrent(*(playCast->playButtonImageHover));
+
+	this->aboutButton = new wxBitmapButton(this, 1002, *(aboutCast->aboutButtonImage), wxPoint(aboutCast->x, aboutCast->y), wxDefaultSize, wxBORDER_NONE);
+	this->aboutButton->SetBitmapCurrent(*(aboutCast->aboutButtonImageHover));
+
+	PlaySound(TEXT("BG-Music2.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+
+	temp = new Flower(10, 500, 3, 2);
+	this->flowerContainer.Add(temp);
+	temp = new Flower(10, 10, -2, 3);
+	this->flowerContainer.Add(temp);
+	temp = new Flower(300, 10, 3, 3);
+	this->flowerContainer.Add(temp);
+	temp = new Flower(300, 500, -3, 2);
+	this->flowerContainer.Add(temp);
+
+	timer = new wxTimer(this, TIMER_ID);
+	timer->Start(20);
 }
 
 void MainWindow::OnMouseLeftDown(wxMouseEvent & event)
 {
-	int mouseX = event.GetX(), mouseY = event.GetY();
-
-	// -- Check if the mouse in the Play Button position -- //
-	if (playBtn != nullptr) {
-		if (playBtn->checkMouse(mouseX, mouseY))
-			parentFrame->ShowGameWindow();
-			//wxMessageOutputDebug().Printf("%s", "Play button clicked");
-	}
-
-	// -- Check if the mouse in the About Button position -- //
-	if (aboutBtn != nullptr) {
-		if (aboutBtn->checkMouse(mouseX, mouseY))
-			wxMessageBox(wxT("Karamasu The Game"), wxT("About this Game"));
-			//wxMessageOutputDebug().Printf("%s", "About button clicked");
-	}	
+	
 }
 
 void MainWindow::OnPaint(wxPaintEvent & event)
 {
 	wxPaintDC pdc(this);
+	
 	if (backgroundMenu != nullptr) {
 		pdc.DrawBitmap(*backgroundMenu, wxPoint(0, 0), true);
 	}
+
+	for (uint i = 0; i < flowerContainer.GetCount(); i++) {
+		Flower *temp1 = flowerContainer[i];
+		if (temp1 != nullptr) {
+			temp1->Draw(pdc);
+		}
+	}
+
 	if (logo != nullptr) {
 		pdc.DrawBitmap(*logo, wxPoint(30, 50), true); // y = 37
 	}
-	if (playBtn != nullptr) {
-		playBtn->DrawButton(pdc);
+}
+
+void MainWindow::OnPlayClick(wxCommandEvent & event)
+{
+	switchFrame->ShowGameWindow();
+}
+
+void MainWindow::OnAboutClick(wxCommandEvent & event)
+{
+	wxMessageBox(wxT("Karamasu The Game"), wxT("About"));
+}
+
+void MainWindow::OnTimer(wxTimerEvent & event)
+{
+	for (uint i = 0; i < flowerContainer.GetCount(); i++) {
+		Flower *temp1 = flowerContainer[i];
+		if (temp1 != nullptr) {
+			temp1->Move(GetClientSize().GetWidth(), GetClientSize().GetHeight());
+		}
 	}
-	if (aboutBtn != nullptr) {
-		aboutBtn->DrawButton(pdc);
-	}
+	Refresh();
 }
 
 MainWindow::~MainWindow()
 {
+	
 }

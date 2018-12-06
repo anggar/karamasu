@@ -10,6 +10,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="PlayButton.cpp" />
     <ClCompile Include="AboutButton.cpp" />
+    <ClCompile Include="Flower.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameWindow.h" />
@@ -20,5 +21,6 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="PlayButton.h" />
     <ClInclude Include="AboutButton.h" />
+    <ClInclude Include="Flower.h" />
   </ItemGroup>
 </Project>
