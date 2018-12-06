@@ -9,9 +9,11 @@ void Box::ChangeState(int state) {
 	this->state = state;
 }
 
-void Box::Draw(wxPaintDC &dc, const wxBrush &br) {
-	dc.SetBrush(br);
+int Box::GetState() {
+	return state;
+}
 
+void Box::Draw(wxPaintDC &dc) {
 	switch (this->state) {
 	case 0:
 		dc.SetBrush(*wxWHITE_BRUSH);

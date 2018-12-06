@@ -73,7 +73,7 @@ void GameWindow::OnPaint(wxPaintEvent &event) {
 	for (int i = 0; i < 6; i++) {
 		auto temp = boxes->Item(i);
 		for (int j = 0; j < 6; j++) {
-			temp.Item(j).Draw(pdc, *wxWHITE_BRUSH);
+			temp.Item(j).Draw(pdc);
 		}
 	}
 }
@@ -83,6 +83,8 @@ void GameWindow::OnMouseEvent(wxMouseEvent &event) {
 	int curstate = 0;
 
 	dc.SetBrush(*wxWHITE_BRUSH);
+
+	BoxArray prevBoxes = *(this->boxes);
 
 	int pos_x = (event.GetPosition().x - 10) / 55;
 	int pos_y = (event.GetPosition().y - 80) / 55;
@@ -100,13 +102,19 @@ void GameWindow::OnMouseEvent(wxMouseEvent &event) {
 		curstate = 2;
 	}
 
-	this->boxes->Item(pos_x).Item(pos_y).ChangeState(curstate);
 	if ((pos_x < 6 && pos_x >= 0) && (pos_y < 6 && pos_y >= 0)) {
 		//dc.DrawRoundedRectangle(wxPoint(10 + 55 * pos_x, 80 + 55 * pos_y), wxSize(50, 50), 5);
 
 		if(curstate !=  2) curstate = 1;
 		this->boxes->Item(pos_x).Item(pos_y).ChangeState(curstate);
-		Refresh();
+	}
+
+	for (int i = 0; i < 6; i++) {
+		for (int j = 0; j < 6; j++) {
+			if (this->boxes->Item(i).Item(j).GetState() != prevBoxes[i][j].GetState()) {
+				Refresh();
+			}
+		}
 	}
 	/*if (event.Moving()) {
 		dc.SetBrush(*wxBLUE_BRUSH);

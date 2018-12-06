@@ -7,8 +7,9 @@ class Box
 {
 public:
 	Box(Kanji *kanji, int type, int posx, int posy, int state);
-	void Draw(wxPaintDC &dc, const wxBrush &br);
+	void Draw(wxPaintDC &dc);
 	void ChangeState(int state);
+	int GetState();
 
 	~Box();
 private:
