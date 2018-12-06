@@ -1,6 +1,7 @@
 #pragma once
 #include "wx/wx.h"
 #include "SwitchFrame.h"
+#include "sqlite3.h"
 
 class BoxArray;
 
@@ -18,7 +19,11 @@ private:
 	wxBitmap *backgroundImage = nullptr;
 	
 	BoxArray *boxes;
+
+	void LoadKanji(int category, int datalen);
+
 	void LoadImageBackground();
+	
 	wxDECLARE_EVENT_TABLE();
 };
 

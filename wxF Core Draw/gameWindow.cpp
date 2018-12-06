@@ -31,17 +31,22 @@ GameWindow::GameWindow(SwitchFrame *parent)
 
 	this->boxes = new BoxArray();
 
-	Kanji *teskanji = new Kanji('A', "rain");
+	Kanji *teskanji = new Kanji('B', "rain");
 
 	BoxArr temparr;
 
 	for (int i = 0; i < 6; i++) {
 		for (int j = 0; j < 6; j++) {
+			teskanji->RandomKanji();
 			temparr.Add(new Box(teskanji, 0, i, j, 0));
 		}
 		boxes->Add(temparr);
 		temparr.Clear();
 	}
+}
+
+void GameWindow::LoadKanji(int category, int datalen) {
+
 }
 
 void GameWindow::LoadImageBackground() {

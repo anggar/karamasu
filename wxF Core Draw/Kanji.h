@@ -5,12 +5,15 @@
 class Kanji
 {
 public:
-	Kanji(char utf, wxString meaning);
+	Kanji(wxString utf, wxString meaning);
 	~Kanji();
 	wxString GetChar();
-
+	void SetChar(wxString utf);
+	void RandomKanjiFromRadical(wxString radical);
+	void RandomKanji();
 private:
-	char utf;
+	static int SetRandomKanji(void *k, int argc, char **argv, char **azColName);
+	wxString utf;
 	wxString meaning;
 };
 

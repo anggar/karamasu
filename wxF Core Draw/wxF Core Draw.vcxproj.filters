@@ -24,5 +24,6 @@
     <ClInclude Include="AboutButton.h" />
     <ClInclude Include="Flower.h" />
     <ClInclude Include="ExitButton.h" />
+    <ClInclude Include="sqlite3.h" />
   </ItemGroup>
 </Project>

@@ -30,9 +30,9 @@ void Box::Draw(wxPaintDC &dc) {
 
 	dc.DrawRoundedRectangle(wxPoint(10 + 55 * position.x, 80 + 55 * position.y), wxSize(50, 50), 5);
 
-	dc.SetFont(wxFont(20, wxFONTFAMILY_SWISS, wxNORMAL, wxBOLD, false, wxT("Calibri"), wxFONTENCODING_UTF8));
+	dc.SetFont(wxFont(20, wxFONTFAMILY_DEFAULT, wxNORMAL, wxNORMAL, false, wxT("MS Gothic"), wxFONTENCODING_UTF8));
 
-	dc.DrawText(this->kkanji->GetChar(), wxPoint(10 + 55 * position.x, 80 + 55 * position.y));
+	dc.DrawText(this->kkanji->GetChar(), wxPoint(10 + 55 * position.x + 10, 80 + 55 * position.y + 10));
 }
 
 Box::~Box()
