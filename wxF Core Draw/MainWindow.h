@@ -6,6 +6,7 @@
 #include "PlayButton.h"
 #include "AboutButton.h"
 #include "Flower.h"
+#include "ExitButton.h"
 
 WX_DECLARE_OBJARRAY(Flower*, FlowerArray);
 
@@ -25,9 +26,11 @@ private:
 
 	Button *play;
 	Button *about;
+	Button *exit;
 
 	wxBitmapButton *playButton;
 	wxBitmapButton *aboutButton;
+	wxBitmapButton *exitButton;
 
 	wxTimer *timer;
 
@@ -37,6 +40,7 @@ public:
 	void OnPaint(wxPaintEvent &event);
 	void OnPlayClick(wxCommandEvent &event);
 	void OnAboutClick(wxCommandEvent &event);
+	void OnExitClick(wxCommandEvent &event);
 	void OnTimer(wxTimerEvent &event);
 	~MainWindow();
 	wxDECLARE_EVENT_TABLE();

@@ -8,10 +8,11 @@ typedef unsigned int uint;
 WX_DEFINE_OBJARRAY(FlowerArray);
 
 BEGIN_EVENT_TABLE(MainWindow, wxWindow)
-EVT_PAINT(MainWindow::OnPaint)
+	EVT_PAINT(MainWindow::OnPaint)
 	EVT_TIMER(TIMER_ID, MainWindow::OnTimer)
 	EVT_BUTTON(1001, MainWindow::OnPlayClick)
 	EVT_BUTTON(1002, MainWindow::OnAboutClick)
+	EVT_BUTTON(1003, MainWindow::OnExitClick)
 	EVT_LEFT_DOWN(MainWindow::OnMouseLeftDown)
 END_EVENT_TABLE()
 
@@ -51,6 +52,7 @@ MainWindow::MainWindow(SwitchFrame * parent)
 	// -- DEFINING THE BUTTON CLASS -- //
 	this->play = new PlayButton();
 	this->about = new AboutButton();
+	this->exit = new ExitButton();
 
 	// -- LOAD THE LOGO AND THE BACKGROUND -- //
 	this->LoadBackgroundMenu();
@@ -59,12 +61,16 @@ MainWindow::MainWindow(SwitchFrame * parent)
 	// -- CREATE THE BUTTON -- //
 	PlayButton *playCast = (PlayButton*) play;
 	AboutButton *aboutCast = (AboutButton*) about;
+	ExitButton *exitCast = (ExitButton*) exit;
 	
 	this->playButton = new wxBitmapButton(this, 1001, *(playCast->playButtonImage), wxPoint(playCast->x, playCast->y), wxDefaultSize, wxBORDER_NONE);
 	this->playButton->SetBitmapCurrent(*(playCast->playButtonImageHover));
 
 	this->aboutButton = new wxBitmapButton(this, 1002, *(aboutCast->aboutButtonImage), wxPoint(aboutCast->x, aboutCast->y), wxDefaultSize, wxBORDER_NONE);
 	this->aboutButton->SetBitmapCurrent(*(aboutCast->aboutButtonImageHover));
+
+	this->exitButton = new wxBitmapButton(this, 1003, *(exitCast->exitButtonImage), wxPoint(exitCast->x, exitCast->y), wxDefaultSize, wxBORDER_NONE);
+	this->exitButton->SetBitmapCurrent(*(exitCast->exitButtonImageHover));
 
 	PlaySound(TEXT("BG-Music2.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 
@@ -114,6 +120,18 @@ void MainWindow::OnPlayClick(wxCommandEvent & event)
 void MainWindow::OnAboutClick(wxCommandEvent & event)
 {
 	wxMessageBox(wxT("Karamasu The Game"), wxT("About"));
+	//this->switchFrame->Close(true);
+}
+
+void MainWindow::OnExitClick(wxCommandEvent & event)
+{
+	/*wxMessageDialog *exitDialog;
+	exitDialog = new wxMessageDialog(this, wxT("Are you sure want to exit the game?"), wxT("Karamasu"), wxYES | wxNO);
+	if (exitDialog->ShowModal() == wxYES) {
+		this->switchFrame->Close(true);
+	}
+	exitDialog->Show*/
+	this->switchFrame->Close(true);
 }
 
 void MainWindow::OnTimer(wxTimerEvent & event)

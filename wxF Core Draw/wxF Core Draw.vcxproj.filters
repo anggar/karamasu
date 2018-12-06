@@ -11,6 +11,7 @@
     <ClCompile Include="PlayButton.cpp" />
     <ClCompile Include="AboutButton.cpp" />
     <ClCompile Include="Flower.cpp" />
+    <ClCompile Include="ExitButton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameWindow.h" />
@@ -22,5 +23,6 @@
     <ClInclude Include="PlayButton.h" />
     <ClInclude Include="AboutButton.h" />
     <ClInclude Include="Flower.h" />
+    <ClInclude Include="ExitButton.h" />
   </ItemGroup>
 </Project>
