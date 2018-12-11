@@ -4,6 +4,7 @@
 #include "sqlite3.h"
 
 class BoxArray;
+class RadicalArray;
 
 class GameWindow
 	: public wxWindow
@@ -13,15 +14,13 @@ public:
 	void OnMouseEvent(wxMouseEvent &event);
 	void OnTimer(wxTimerEvent &event);
 	void OnPaint(wxPaintEvent &event);
+
 	~GameWindow();
 private:
 	wxTimer *timer;
 	wxBitmap *backgroundImage = nullptr;
 	
 	BoxArray *boxes;
-
-	void LoadKanji(int category, int datalen);
-
 	void LoadImageBackground();
 	
 	wxDECLARE_EVENT_TABLE();

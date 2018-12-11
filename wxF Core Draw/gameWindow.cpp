@@ -4,12 +4,16 @@
 #include <wx/stdpaths.h>
 #include <wx/filename.h>
 #include <wx/arrimpl.cpp>
+#include <vector>
+#include "sqlite3.h"
 #define TIMER_ID 1945
 
 WX_DECLARE_OBJARRAY(Box, BoxArr);
 WX_DECLARE_OBJARRAY(BoxArr, BoxArray);
 WX_DEFINE_OBJARRAY(BoxArr);
 WX_DEFINE_OBJARRAY(BoxArray);
+
+WX_DECLARE_OBJARRAY(Kanji, RadicalArray);
 
 BEGIN_EVENT_TABLE(GameWindow, wxWindow)
 	EVT_PAINT(GameWindow::OnPaint)
@@ -27,26 +31,22 @@ GameWindow::GameWindow(SwitchFrame *parent)
 
 	wxClientDC dc(this);
 
+	//std::vector<wxString> * Kanji::radicalSelection = new std::vector<wxString>;
+	Kanji::SetRandomRadical();
+
 	this->LoadImageBackground();
 
 	this->boxes = new BoxArray();
-
-	Kanji *teskanji = new Kanji('B', "rain");
 
 	BoxArr temparr;
 
 	for (int i = 0; i < 6; i++) {
 		for (int j = 0; j < 6; j++) {
-			teskanji->RandomKanji();
-			temparr.Add(new Box(teskanji, 0, i, j, 0));
+			temparr.Add(new Box(new Kanji(), 0, i, j, 0));
 		}
 		boxes->Add(temparr);
 		temparr.Clear();
 	}
-}
-
-void GameWindow::LoadKanji(int category, int datalen) {
-
 }
 
 void GameWindow::LoadImageBackground() {
