@@ -12,14 +12,14 @@ PlayButton::PlayButton()
 	this->width = image.GetWidth();
 	this->height = image.GetHeight();
 	this->x = 95;
-	this->y = 200;
+	this->y = 190;
 
-	this->playButtonImage = new wxBitmap(image);
+	this->buttonImage = new wxBitmap(image);
 
 	fileLocation = wxFileName(fileLocation).GetPath() + wxT("\\..\\Asset\\Play-Button-Icon-new-hover.png");
 	wxImage image2(fileLocation, wxBITMAP_TYPE_PNG);
 
-	this->playButtonImageHover = new wxBitmap(image2);
+	this->buttonImageHover = new wxBitmap(image2);
 }
 
 PlayButton::~PlayButton()
@@ -38,10 +38,5 @@ bool PlayButton::checkMouse(int x, int y)
 
 void PlayButton::DrawButton(wxPaintDC & pdc)
 {
-	pdc.DrawBitmap(*playButtonImage, wxPoint(this->x, this->y), true);
-}
-
-void PlayButton::DrawButtonHover(wxPaintDC & pdc)
-{
-	pdc.DrawBitmap(*playButtonImageHover, wxPoint(this->x, this->y), true);
+	pdc.DrawBitmap(*(buttonImage), wxPoint(this->x, this->y), true);
 }

@@ -12,14 +12,14 @@ ExitButton::ExitButton()
 	this->width = image.GetWidth();
 	this->height = image.GetHeight();
 	this->x = 95;
-	this->y = 460;
+	this->y = 500;
 
-	this->exitButtonImage = new wxBitmap(image);
+	this->buttonImage = new wxBitmap(image);
 
 	fileLocation = wxFileName(fileLocation).GetPath() + wxT("\\..\\Asset\\Exit-Button-Icon-new-hover.png");
 	wxImage image2(fileLocation, wxBITMAP_TYPE_PNG);
 
-	this->exitButtonImageHover = new wxBitmap(image2);
+	this->buttonImageHover = new wxBitmap(image2);
 }
 
 
@@ -34,9 +34,5 @@ bool ExitButton::checkMouse(int x, int y)
 }
 
 void ExitButton::DrawButton(wxPaintDC & pdc)
-{
-}
-
-void ExitButton::DrawButtonHover(wxPaintDC & pdc)
 {
 }

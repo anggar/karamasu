@@ -47,6 +47,7 @@ GameWindow::GameWindow(SwitchFrame *parent)
 		boxes->Add(temparr);
 		temparr.Clear();
 	}
+	
 }
 
 void GameWindow::LoadImageBackground() {
@@ -56,6 +57,44 @@ void GameWindow::LoadImageBackground() {
 	wxImage image(fileLocation, wxBITMAP_TYPE_JPEG);
 
 	this->backgroundImage = new wxBitmap(image);
+}
+
+void GameWindow::UpdateScore(int num)
+{
+	if (num > 9999) UpdateScore(9999);
+	if (0 <= num && num < 10) {
+		scoreArr[0] = scoreArr[1] = scoreArr[2] = '0';
+		scoreArr[3] = char((num % 10) + 48);
+		return;
+	}
+	if (10 <= num && num < 100) {
+		scoreArr[0] = scoreArr[1] = '0';
+		scoreArr[3] = char((num % 10) + 48);
+		num /= 10;
+		scoreArr[2] = char((num % 10) + 48);
+		return;
+	}
+	if (100 <= num && num < 1000) {
+		scoreArr[0] = '0';
+		scoreArr[3] = char((num % 10) + 48);
+		num /= 10;
+		scoreArr[2] = char((num % 10) + 48);
+		num /= 10;
+		scoreArr[1] = char((num % 10) + 48);
+		num /= 10;
+		return;
+	}
+	if (1000 <= num && num < 10000) {
+		scoreArr[3] = char((num % 10) + 48);
+		num /= 10;
+		scoreArr[2] = char((num % 10) + 48);
+		num /= 10;
+		scoreArr[1] = char((num % 10) + 48);
+		num /= 10;
+		scoreArr[0] = char((num % 10) + 48);
+		num /= 10;
+		return;
+	}
 }
 
 GameWindow::~GameWindow()
@@ -81,6 +120,22 @@ void GameWindow::OnPaint(wxPaintEvent &event) {
 			temp.Item(j).Draw(pdc);
 		}
 	}
+
+	pdc.SetBrush(*wxWHITE_BRUSH);
+	pdc.SetPen(*wxBLACK_PEN);
+	pdc.DrawRoundedRectangle(wxPoint(10, 500),wxSize(325, 80),5);
+
+	pdc.SetFont(wxFont(15, wxFONTFAMILY_DEFAULT, wxNORMAL, wxNORMAL, false, wxT("Road Rage")));
+	pdc.DrawText(wxT("SCORE"), wxPoint(140, 505));
+	
+	// -- DRAWING THE SCORE -- //
+	wxString n = "";
+	n += char(scoreArr[0]);
+	n += char(scoreArr[1]);
+	n += char(scoreArr[2]);
+	n += char(scoreArr[3]);
+	pdc.SetFont(wxFont(17, wxFONTFAMILY_DEFAULT, wxNORMAL, wxBOLD, false, wxT("Segoe UI")));
+	pdc.DrawText(n, wxPoint(145, 535));
 }
 
 void GameWindow::OnMouseEvent(wxMouseEvent &event) {

@@ -13,6 +13,7 @@ BEGIN_EVENT_TABLE(MainWindow, wxWindow)
 	EVT_BUTTON(1001, MainWindow::OnPlayClick)
 	EVT_BUTTON(1002, MainWindow::OnAboutClick)
 	EVT_BUTTON(1003, MainWindow::OnExitClick)
+	EVT_BUTTON(1004, MainWindow::OnHowClick)
 	EVT_LEFT_DOWN(MainWindow::OnMouseLeftDown)
 END_EVENT_TABLE()
 
@@ -47,32 +48,31 @@ MainWindow::MainWindow(SwitchFrame * parent)
 	wxImage::AddHandler(pngHandler);
 	wxImage::AddHandler(jpgHandler);
 
-	wxClientDC dc(this);
-
 	// -- DEFINING THE BUTTON CLASS -- //
 	this->play = new PlayButton();
 	this->about = new AboutButton();
 	this->exit = new ExitButton();
+	this->how = new HowToPlayButton();
 
 	// -- LOAD THE LOGO AND THE BACKGROUND -- //
 	this->LoadBackgroundMenu();
 	this->LoadImageLogo();
 
 	// -- CREATE THE BUTTON -- //
-	PlayButton *playCast = (PlayButton*) play;
-	AboutButton *aboutCast = (AboutButton*) about;
-	ExitButton *exitCast = (ExitButton*) exit;
 	
-	this->playButton = new wxBitmapButton(this, 1001, *(playCast->playButtonImage), wxPoint(playCast->x, playCast->y), wxDefaultSize, wxBORDER_NONE);
-	this->playButton->SetBitmapCurrent(*(playCast->playButtonImageHover));
+	this->playButton = new wxBitmapButton(this, 1001, *(play->buttonImage), wxPoint(play->x, play->y), wxDefaultSize, wxBORDER_NONE);
+	this->playButton->SetBitmapCurrent(*(play->buttonImageHover));
 
-	this->aboutButton = new wxBitmapButton(this, 1002, *(aboutCast->aboutButtonImage), wxPoint(aboutCast->x, aboutCast->y), wxDefaultSize, wxBORDER_NONE);
-	this->aboutButton->SetBitmapCurrent(*(aboutCast->aboutButtonImageHover));
+	this->aboutButton = new wxBitmapButton(this, 1002, *(about->buttonImage), wxPoint(about->x, about->y), wxDefaultSize, wxBORDER_NONE);
+	this->aboutButton->SetBitmapCurrent(*(about->buttonImageHover));
 
-	this->exitButton = new wxBitmapButton(this, 1003, *(exitCast->exitButtonImage), wxPoint(exitCast->x, exitCast->y), wxDefaultSize, wxBORDER_NONE);
-	this->exitButton->SetBitmapCurrent(*(exitCast->exitButtonImageHover));
+	this->howToPlayButton = new wxBitmapButton(this, 1004, *(how->buttonImage), wxPoint(how->x, how->y), wxDefaultSize, wxBORDER_NONE);
+	this->howToPlayButton->SetBitmapCurrent(*(how->buttonImageHover));
 
-	PlaySound(TEXT("BG-Music2.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+	this->exitButton = new wxBitmapButton(this, 1003, *(exit->buttonImage), wxPoint(exit->x, exit->y), wxDefaultSize, wxBORDER_NONE);
+	this->exitButton->SetBitmapCurrent(*(exit->buttonImageHover));
+
+	PlaySound(TEXT("BG-Music3.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 
 	temp = new Flower(10, 500, 3, 2);
 	this->flowerContainer.Add(temp);
@@ -84,7 +84,7 @@ MainWindow::MainWindow(SwitchFrame * parent)
 	this->flowerContainer.Add(temp);
 
 	timer = new wxTimer(this, TIMER_ID);
-	timer->Start(20);
+	//timer->Start(60);
 }
 
 void MainWindow::OnMouseLeftDown(wxMouseEvent & event)
@@ -119,19 +119,17 @@ void MainWindow::OnPlayClick(wxCommandEvent & event)
 
 void MainWindow::OnAboutClick(wxCommandEvent & event)
 {
-	wxMessageBox(wxT("Karamasu The Game"), wxT("About"));
+	wxMessageBox(wxT("Karamasu Version 1.0\n\nThis game was developed by Bayu Laksana and Anggar.\nCopyright 2018. "), wxT("About"));
 	//this->switchFrame->Close(true);
 }
 
 void MainWindow::OnExitClick(wxCommandEvent & event)
 {
-	/*wxMessageDialog *exitDialog;
-	exitDialog = new wxMessageDialog(this, wxT("Are you sure want to exit the game?"), wxT("Karamasu"), wxYES | wxNO);
-	if (exitDialog->ShowModal() == wxYES) {
-		this->switchFrame->Close(true);
-	}
-	exitDialog->Show*/
 	this->switchFrame->Close(true);
+}
+
+void MainWindow::OnHowClick(wxCommandEvent & event)
+{
 }
 
 void MainWindow::OnTimer(wxTimerEvent & event)
@@ -143,6 +141,7 @@ void MainWindow::OnTimer(wxTimerEvent & event)
 		}
 	}
 	Refresh();
+	Update();
 }
 
 MainWindow::~MainWindow()

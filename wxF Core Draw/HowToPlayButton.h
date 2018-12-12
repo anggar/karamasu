@@ -1,17 +1,16 @@
 #pragma once
 #include "Button.h"
-
-class PlayButton :
+class HowToPlayButton :
 	public Button
 {
-
 public:
-	/*wxBitmap *playButtonImage;
-	wxBitmap *playButtonImageHover;*/
-
-	PlayButton();
-	~PlayButton();
+	/*wxBitmap *howToPlayButtonImage;
+	wxBitmap *howToPlayButtonImageHover;
+	*/
 	virtual bool checkMouse(int x, int y);
 	virtual void DrawButton(wxPaintDC &pdc);
+
+	HowToPlayButton();
+	~HowToPlayButton();
 };
 

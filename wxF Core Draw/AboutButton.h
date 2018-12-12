@@ -3,18 +3,15 @@
 class AboutButton :
 	public Button
 {
-private:
-	//wxBitmap *aboutButtonImage;
 
 public:
-	wxBitmap *aboutButtonImage;
-	wxBitmap *aboutButtonImageHover;
+	/*wxBitmap *aboutButtonImage;
+	wxBitmap *aboutButtonImageHover;*/
 
 	AboutButton();
 	~AboutButton();
 	virtual bool checkMouse(int x, int y);
 	virtual void DrawButton(wxPaintDC &pdc);
-	virtual void DrawButtonHover(wxPaintDC &pdc);
 
 };
 

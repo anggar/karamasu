@@ -22,7 +22,9 @@ private:
 	
 	BoxArray *boxes;
 	void LoadImageBackground();
-	
+	void UpdateScore(int num);
+	char scoreArr[4] = { '0','0','0','0' };
+	int score = 0;
 	wxDECLARE_EVENT_TABLE();
 };
 

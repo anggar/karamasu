@@ -25,6 +25,7 @@
     <ClCompile Include="ExitButton.cpp" />
     <ClCompile Include="Flower.cpp" />
     <ClCompile Include="GameWindow.cpp" />
+    <ClCompile Include="HowToPlayButton.cpp" />
     <ClCompile Include="Kanji.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
@@ -38,6 +39,7 @@
     <ClInclude Include="ExitButton.h" />
     <ClInclude Include="Flower.h" />
     <ClInclude Include="GameWindow.h" />
+    <ClInclude Include="HowToPlayButton.h" />
     <ClInclude Include="Kanji.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="PlayButton.h" />
