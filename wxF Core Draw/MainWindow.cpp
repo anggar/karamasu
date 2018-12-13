@@ -130,6 +130,7 @@ void MainWindow::OnExitClick(wxCommandEvent & event)
 
 void MainWindow::OnHowClick(wxCommandEvent & event)
 {
+	this->switchFrame->ShowHowToPlayWIndow();
 }
 
 void MainWindow::OnTimer(wxTimerEvent & event)

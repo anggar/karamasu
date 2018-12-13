@@ -13,6 +13,8 @@
     <ClCompile Include="Flower.cpp" />
     <ClCompile Include="ExitButton.cpp" />
     <ClCompile Include="HowToPlayButton.cpp" />
+    <ClCompile Include="HowToPlayWindow.cpp" />
+    <ClCompile Include="BackButton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameWindow.h" />
@@ -27,5 +29,7 @@
     <ClInclude Include="ExitButton.h" />
     <ClInclude Include="sqlite3.h" />
     <ClInclude Include="HowToPlayButton.h" />
+    <ClInclude Include="HowToPlayWindow.h" />
+    <ClInclude Include="BackButton.h" />
   </ItemGroup>
 </Project>

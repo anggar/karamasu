@@ -3,6 +3,7 @@
 
 class MainWindow;
 class GameWindow;
+class HowToPlayWindow;
 
 class SwitchFrame :
 	public wxFrame
@@ -11,6 +12,7 @@ private:
 	wxBoxSizer *boxSizer;
 	MainWindow *mainWindow;
 	GameWindow *GameWindows;
+	HowToPlayWindow *HowWindow;
 
 	void fitWindowSize();
 
@@ -19,6 +21,7 @@ public:
 	void InitComponents();
 	void ShowMainWindow();
 	void ShowGameWindow();
+	void ShowHowToPlayWIndow();
 	~SwitchFrame();
 };
 
