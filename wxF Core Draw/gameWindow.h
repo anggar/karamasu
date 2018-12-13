@@ -25,6 +25,7 @@ private:
 	void UpdateScore(int num);
 	char scoreArr[4] = { '0','0','0','0' };
 	int score = 0;
-	wxDECLARE_EVENT_TABLE();
+	static const int TIME_LIMIT = 300;
+ 	wxDECLARE_EVENT_TABLE();
 };
 

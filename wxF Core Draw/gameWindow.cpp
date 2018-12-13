@@ -6,6 +6,7 @@
 #include <wx/arrimpl.cpp>
 #include <vector>
 #include "sqlite3.h"
+#include "wx/dcbuffer.h"
 #define TIMER_ID 1945
 
 WX_DECLARE_OBJARRAY(Box, BoxArr);
@@ -31,10 +32,13 @@ GameWindow::GameWindow(SwitchFrame *parent)
 
 	wxClientDC dc(this);
 
-	//std::vector<wxString> * Kanji::radicalSelection = new std::vector<wxString>;
 	Kanji::SetRandomRadical();
-
+	
 	this->LoadImageBackground();
+	
+	timer = new wxTimer(this, TIMER_ID);
+	timer->Start(1000);
+
 
 	this->boxes = new BoxArray();
 
@@ -103,9 +107,15 @@ GameWindow::~GameWindow()
  
 void GameWindow::OnTimer(wxTimerEvent &event) {
 	static int counter = 0;
-	wxMessageOutputDebug().Printf("%d", counter++);
+	
+	wxClientDC dc(this);
 
-	Refresh();
+	dc.SetPen(*wxBLACK_PEN);
+	dc.SetBrush(*wxWHITE_BRUSH);
+	dc.DrawRoundedRectangle(wxPoint(10 + 110, 15), wxSize(105, 60), 5);
+	dc.SetFont(wxFont(20, wxFONTFAMILY_DEFAULT, wxNORMAL, wxNORMAL, false, wxT("Road Rage")));
+	dc.DrawText(wxString::Format(wxT("%02d : %02d"), (TIME_LIMIT-counter)/60, (TIME_LIMIT-counter)%60), wxPoint(130, 30));
+	counter++;
 }
 
 void GameWindow::OnPaint(wxPaintEvent &event) {
@@ -121,14 +131,27 @@ void GameWindow::OnPaint(wxPaintEvent &event) {
 		}
 	}
 
-	pdc.SetBrush(*wxWHITE_BRUSH);
+	// DRAWING THE RADICAL HELPER
 	pdc.SetPen(*wxBLACK_PEN);
-	pdc.DrawRoundedRectangle(wxPoint(10, 500),wxSize(325, 80),5);
+	pdc.SetFont(wxFont(24, wxFONTFAMILY_DEFAULT, wxNORMAL, wxNORMAL, false, wxT("MS Gothic")));
 
-	pdc.SetFont(wxFont(15, wxFONTFAMILY_DEFAULT, wxNORMAL, wxNORMAL, false, wxT("Road Rage")));
-	pdc.DrawText(wxT("SCORE"), wxPoint(140, 505));
+	pdc.SetBrush(*wxWHITE_BRUSH);
+	for (int i = 0; i < 3; i++) {
+		pdc.DrawRoundedRectangle(wxPoint(10+110*i, 420), wxSize(105, 60), 5);
+	}
+
+	pdc.SetBrush(wxBrush(wxColour(0xAE, 0xE2, 0x83, 50), wxBRUSHSTYLE_CROSSDIAG_HATCH));
+	for (int i = 0; i < 3; i++) {
+		pdc.DrawRoundedRectangle(wxPoint(10+110*i, 420), wxSize(105, 60), 5);
+		pdc.DrawText(Kanji::radicalSelection->at(i), wxPoint(48+110*i, 432));
+	}
 	
 	// -- DRAWING THE SCORE -- //
+	pdc.SetBrush(*wxWHITE_BRUSH);
+	pdc.SetFont(wxFont(15, wxFONTFAMILY_DEFAULT, wxNORMAL, wxNORMAL, false, wxT("Road Rage")));
+	pdc.DrawRoundedRectangle(wxPoint(10, 500),wxSize(325, 80),5);
+	pdc.DrawText(wxT("SCORE"), wxPoint(140, 505));
+	
 	wxString n = "";
 	n += char(scoreArr[0]);
 	n += char(scoreArr[1]);
@@ -163,8 +186,6 @@ void GameWindow::OnMouseEvent(wxMouseEvent &event) {
 	}
 
 	if ((pos_x < 6 && pos_x >= 0) && (pos_y < 6 && pos_y >= 0)) {
-		//dc.DrawRoundedRectangle(wxPoint(10 + 55 * pos_x, 80 + 55 * pos_y), wxSize(50, 50), 5);
-
 		if(curstate !=  2) curstate = 1;
 		this->boxes->Item(pos_x).Item(pos_y).ChangeState(curstate);
 	}
@@ -172,21 +193,8 @@ void GameWindow::OnMouseEvent(wxMouseEvent &event) {
 	for (int i = 0; i < 6; i++) {
 		for (int j = 0; j < 6; j++) {
 			if (this->boxes->Item(i).Item(j).GetState() != prevBoxes[i][j].GetState()) {
-				Refresh();
+				RefreshRect(wxRect(wxPoint(10 + 55*i, 80 + 55*j), wxSize(50, 50)), false);
 			}
 		}
 	}
-	/*if (event.Moving()) {
-		dc.SetBrush(*wxBLUE_BRUSH);
-		dc.FloodFill(event.GetPosition(), *wxWHITE, wxFLOOD_SURFACE);
-	}
-	else if (event.Dragging() || event.LeftDown()) {
-		dc.SetBrush(*wxRED_BRUSH);
-		dc.FloodFill(event.GetPosition(), *wxWHITE, wxFLOOD_SURFACE);
-	}*/
-
-	/*
-	dc.SetPen(wxPen(wxColour(*wxRED)));
-	dc.DrawPoint(event.GetPosition());
-	dc.SetPen(wxPen(wxNullPen));*/
 }

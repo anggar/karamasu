@@ -35,6 +35,29 @@ void Box::Draw(wxPaintDC &dc) {
 	dc.DrawText(this->kkanji->GetChar(), wxPoint(10 + 55 * position.x + 10, 80 + 55 * position.y + 10));
 }
 
+void Box::Draw(wxBufferedPaintDC & dc)
+{
+	switch (this->state) {
+	case 0:
+		dc.SetBrush(*wxWHITE_BRUSH);
+		break;
+	case 1:
+		dc.SetBrush(*wxBLUE_BRUSH);
+		break;
+	case 2:
+		dc.SetBrush(*wxRED_BRUSH);
+		break;
+	}
+
+	dc.SetPen(*wxBLACK_PEN);
+
+	dc.DrawRoundedRectangle(wxPoint(10 + 55 * position.x, 80 + 55 * position.y), wxSize(50, 50), 5);
+
+	dc.SetFont(wxFont(20, wxFONTFAMILY_DEFAULT, wxNORMAL, wxNORMAL, false, wxT("MS Gothic"), wxFONTENCODING_UTF8));
+
+	dc.DrawText(this->kkanji->GetChar(), wxPoint(10 + 55 * position.x + 10, 80 + 55 * position.y + 10));
+}
+
 Box::~Box()
 {
 }
