@@ -1,6 +1,7 @@
 #include "SwitchFrame.h"
 #include "MainWindow.h"
 #include "GameWindow.h"
+#include "HowToPlayWindow.h"
 
 void SwitchFrame::fitWindowSize()
 {
@@ -29,6 +30,10 @@ void SwitchFrame::InitComponents()
 	this->GameWindows->Show(false);
 	this->boxSizer->Add(GameWindows, 1, wxEXPAND, 0);
 
+	this->HowWindow = new HowToPlayWindow(this);
+	this->HowWindow->Show(false);
+	this->boxSizer->Add(HowWindow, 1, wxEXPAND, 0);
+
 	SetSizer(boxSizer);
 
 	ShowMainWindow();
@@ -38,6 +43,7 @@ void SwitchFrame::ShowMainWindow()
 {
 	this->mainWindow->Show(true);
 	this->GameWindows->Show(false);
+	this->HowWindow->Show(false);
 
 	fitWindowSize();
 }
@@ -46,6 +52,16 @@ void SwitchFrame::ShowGameWindow()
 {
 	this->mainWindow->Show(false);
 	this->GameWindows->Show(true);
+	this->HowWindow->Show(false);
+
+	fitWindowSize();
+}
+
+void SwitchFrame::ShowHowToPlayWIndow()
+{
+	this->mainWindow->Show(false);
+	this->GameWindows->Show(false);
+	this->HowWindow->Show(true);
 
 	fitWindowSize();
 }

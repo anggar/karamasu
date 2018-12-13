@@ -20,12 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AboutButton.cpp" />
+    <ClCompile Include="BackButton.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ExitButton.cpp" />
     <ClCompile Include="Flower.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="HowToPlayButton.cpp" />
+    <ClCompile Include="HowToPlayWindow.cpp" />
     <ClCompile Include="Kanji.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
@@ -34,12 +36,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AboutButton.h" />
+    <ClInclude Include="BackButton.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="ExitButton.h" />
     <ClInclude Include="Flower.h" />
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="HowToPlayButton.h" />
+    <ClInclude Include="HowToPlayWindow.h" />
     <ClInclude Include="Kanji.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="PlayButton.h" />
