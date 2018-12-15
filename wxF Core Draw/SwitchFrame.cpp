@@ -52,6 +52,7 @@ void SwitchFrame::ShowGameWindow()
 {
 	this->mainWindow->Show(false);
 	this->GameWindows->Show(true);
+	this->GameWindows->StartTimer();
 	this->HowWindow->Show(false);
 
 	fitWindowSize();

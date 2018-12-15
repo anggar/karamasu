@@ -14,6 +14,7 @@ public:
 	void OnMouseEvent(wxMouseEvent &event);
 	void OnTimer(wxTimerEvent &event);
 	void OnPaint(wxPaintEvent &event);
+	void StartTimer();
 
 	~GameWindow();
 private:

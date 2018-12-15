@@ -37,8 +37,6 @@ GameWindow::GameWindow(SwitchFrame *parent)
 	this->LoadImageBackground();
 	
 	timer = new wxTimer(this, TIMER_ID);
-	timer->Start(1000);
-
 
 	this->boxes = new BoxArray();
 
@@ -113,8 +111,8 @@ void GameWindow::OnTimer(wxTimerEvent &event) {
 	dc.SetPen(*wxBLACK_PEN);
 	dc.SetBrush(*wxWHITE_BRUSH);
 	dc.DrawRoundedRectangle(wxPoint(10 + 110, 15), wxSize(105, 60), 5);
-	dc.SetFont(wxFont(20, wxFONTFAMILY_DEFAULT, wxNORMAL, wxNORMAL, false, wxT("Road Rage")));
-	dc.DrawText(wxString::Format(wxT("%02d : %02d"), (TIME_LIMIT-counter)/60, (TIME_LIMIT-counter)%60), wxPoint(130, 30));
+	dc.SetFont(wxFont(20, wxFONTFAMILY_DEFAULT, wxNORMAL, wxNORMAL, false, wxT("Impact")));
+	dc.DrawText(wxString::Format(wxT("%02d : %02d"), (TIME_LIMIT-counter)/60, (TIME_LIMIT-counter)%60), wxPoint(137, 28));
 	counter++;
 }
 
@@ -157,8 +155,13 @@ void GameWindow::OnPaint(wxPaintEvent &event) {
 	n += char(scoreArr[1]);
 	n += char(scoreArr[2]);
 	n += char(scoreArr[3]);
-	pdc.SetFont(wxFont(17, wxFONTFAMILY_DEFAULT, wxNORMAL, wxBOLD, false, wxT("Segoe UI")));
+	pdc.SetFont(wxFont(17, wxFONTFAMILY_DEFAULT, wxNORMAL, wxBOLD, false, wxT("Impact")));
 	pdc.DrawText(n, wxPoint(145, 535));
+}
+
+void GameWindow::StartTimer()
+{
+	this->timer->Start(1000);
 }
 
 void GameWindow::OnMouseEvent(wxMouseEvent &event) {
