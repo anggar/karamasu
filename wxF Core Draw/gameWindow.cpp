@@ -20,15 +20,29 @@ BEGIN_EVENT_TABLE(GameWindow, wxWindow)
 	EVT_PAINT(GameWindow::OnPaint)
 	EVT_TIMER(TIMER_ID, GameWindow::OnTimer)
 	EVT_MOUSE_EVENTS(GameWindow::OnMouseEvent)
+	EVT_BUTTON(1001, GameWindow::OnBackClick)
+	EVT_BUTTON(1002, GameWindow::OnPauseClick)
 END_EVENT_TABLE()
 
 GameWindow::GameWindow(SwitchFrame *parent)
-	: wxWindow(parent, wxID_ANY)
+	: wxWindow(parent, wxID_ANY), switchFrame(parent)
 {
 	this->SetBackgroundColour(wxColour(*wxLIGHT_GREY));
 	
-	wxImageHandler *jpegHandler = new wxJPEGHandler();
-	wxImage::AddHandler(jpegHandler);
+	// -- CREATING HANDLER -- //
+	wxImageHandler *pngHandler = new wxPNGHandler;
+	wxImageHandler *jpgHandler = new wxJPEGHandler;
+	wxImage::AddHandler(pngHandler);
+	wxImage::AddHandler(jpgHandler);
+
+	// -- Back Button -- //
+	back = new BackButton(2);
+	backButton = new wxBitmapButton(this, 1001, *(back->buttonImage), wxPoint(back->x, back->y), wxDefaultSize, wxBORDER_NONE);
+	backButton->SetBitmapCurrent(*(back->buttonImageHover));
+
+	pause = new PauseButton();
+	pauseButton = new wxBitmapButton(this, 1002, *(pause->buttonImage), wxPoint(pause->x, pause->y), wxDefaultSize, wxBORDER_NONE);
+	pauseButton->SetBitmapCurrent(*(pause->buttonImageHover));
 
 	wxClientDC dc(this);
 
@@ -104,16 +118,15 @@ GameWindow::~GameWindow()
 }
  
 void GameWindow::OnTimer(wxTimerEvent &event) {
-	static int counter = 0;
-	
+		
 	wxClientDC dc(this);
 
 	dc.SetPen(*wxBLACK_PEN);
 	dc.SetBrush(*wxWHITE_BRUSH);
 	dc.DrawRoundedRectangle(wxPoint(10 + 110, 15), wxSize(105, 60), 5);
 	dc.SetFont(wxFont(20, wxFONTFAMILY_DEFAULT, wxNORMAL, wxNORMAL, false, wxT("Impact")));
-	dc.DrawText(wxString::Format(wxT("%02d : %02d"), (TIME_LIMIT-counter)/60, (TIME_LIMIT-counter)%60), wxPoint(137, 28));
-	counter++;
+	dc.DrawText(wxString::Format(wxT("%02d : %02d"), (TIME_LIMIT)/60, (TIME_LIMIT)%60), wxPoint(137, 28));
+	TIME_LIMIT--;
 }
 
 void GameWindow::OnPaint(wxPaintEvent &event) {
@@ -157,6 +170,17 @@ void GameWindow::OnPaint(wxPaintEvent &event) {
 	n += char(scoreArr[3]);
 	pdc.SetFont(wxFont(17, wxFONTFAMILY_DEFAULT, wxNORMAL, wxBOLD, false, wxT("Impact")));
 	pdc.DrawText(n, wxPoint(145, 535));
+}
+
+void GameWindow::OnBackClick(wxCommandEvent & event)
+{
+	this->timer->Stop();
+	this->TIME_LIMIT = 300;
+	this->switchFrame->ShowMainWindow();
+}
+
+void GameWindow::OnPauseClick(wxCommandEvent & event)
+{
 }
 
 void GameWindow::StartTimer()

@@ -31,6 +31,7 @@
     <ClCompile Include="Kanji.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="PauseButton.cpp" />
     <ClCompile Include="PlayButton.cpp" />
     <ClCompile Include="SwitchFrame.cpp" />
   </ItemGroup>
@@ -46,6 +47,7 @@
     <ClInclude Include="HowToPlayWindow.h" />
     <ClInclude Include="Kanji.h" />
     <ClInclude Include="MainWindow.h" />
+    <ClInclude Include="PauseButton.h" />
     <ClInclude Include="PlayButton.h" />
     <ClInclude Include="sqlite3.h" />
     <ClInclude Include="SwitchFrame.h" />
