@@ -22,10 +22,8 @@ HowToPlayWindow::HowToPlayWindow(SwitchFrame * parent)
 	this->LoadImages();
 	this->LoadLogo();
 
-	back = new BackButton(1);
-
-	this->backButton = new wxBitmapButton(this, 1001, *(back->buttonImage), wxPoint(back->x, back->y), wxDefaultSize, wxBORDER_NONE);
-	this->backButton->SetBitmapCurrent(*(back->buttonImageHover));
+	back = new BackButton(this, 1);
+	back->SetButton(95, 500, 1001);
 }
 
 HowToPlayWindow::~HowToPlayWindow()

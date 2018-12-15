@@ -27,8 +27,6 @@ private:
 	SwitchFrame *switchFrame;
 	Button *back;
 	Button *pause;
-	wxBitmapButton *backButton;
-	wxBitmapButton *pauseButton;
 	
 	BoxArray *boxes;
 	void LoadImageBackground();

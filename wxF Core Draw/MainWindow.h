@@ -30,11 +30,6 @@ private:
 	Button *exit;
 	Button *how;
 
-	wxBitmapButton *playButton;
-	wxBitmapButton *aboutButton;
-	wxBitmapButton *exitButton;
-	wxBitmapButton *howToPlayButton;
-
 	wxTimer *timer;
 
 public:

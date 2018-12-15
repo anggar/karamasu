@@ -4,10 +4,13 @@
 class BackButton :
 	public Button
 {
+private:
+	int type;
+
 public:
-	BackButton(int type);
+	BackButton();
+	BackButton(wxWindow *parent, int type);
 	~BackButton();
-	virtual bool checkMouse(int x, int y);
-	virtual void DrawButton(wxPaintDC &pdc);
+	virtual void LoadImages();
 };
 

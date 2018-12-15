@@ -6,12 +6,10 @@ class PlayButton :
 {
 
 public:
-	/*wxBitmap *playButtonImage;
-	wxBitmap *playButtonImageHover;*/
 
 	PlayButton();
+	PlayButton(wxWindow *parent);
 	~PlayButton();
-	virtual bool checkMouse(int x, int y);
-	virtual void DrawButton(wxPaintDC &pdc);
+	virtual void LoadImages();
 };
 

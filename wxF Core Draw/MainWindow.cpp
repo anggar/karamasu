@@ -49,28 +49,20 @@ MainWindow::MainWindow(SwitchFrame * parent)
 	wxImage::AddHandler(jpgHandler);
 
 	// -- DEFINING THE BUTTON CLASS -- //
-	this->play = new PlayButton();
-	this->about = new AboutButton();
-	this->exit = new ExitButton();
-	this->how = new HowToPlayButton();
+	this->play = new PlayButton(this);
+	this->about = new AboutButton(this);
+	this->exit = new ExitButton(this);
+	this->how = new HowToPlayButton(this);
 
 	// -- LOAD THE LOGO AND THE BACKGROUND -- //
 	this->LoadBackgroundMenu();
 	this->LoadImageLogo();
 
 	// -- CREATE THE BUTTON -- //
-	
-	this->playButton = new wxBitmapButton(this, 1001, *(play->buttonImage), wxPoint(play->x, play->y), wxDefaultSize, wxBORDER_NONE);
-	this->playButton->SetBitmapCurrent(*(play->buttonImageHover));
-
-	this->aboutButton = new wxBitmapButton(this, 1002, *(about->buttonImage), wxPoint(about->x, about->y), wxDefaultSize, wxBORDER_NONE);
-	this->aboutButton->SetBitmapCurrent(*(about->buttonImageHover));
-
-	this->howToPlayButton = new wxBitmapButton(this, 1004, *(how->buttonImage), wxPoint(how->x, how->y), wxDefaultSize, wxBORDER_NONE);
-	this->howToPlayButton->SetBitmapCurrent(*(how->buttonImageHover));
-
-	this->exitButton = new wxBitmapButton(this, 1003, *(exit->buttonImage), wxPoint(exit->x, exit->y), wxDefaultSize, wxBORDER_NONE);
-	this->exitButton->SetBitmapCurrent(*(exit->buttonImageHover));
+	play->SetButton(95, 190, 1001);
+	about->SetButton(95, 450, 1002);
+	how->SetButton(95, 400, 1004);
+	exit->SetButton(95, 500, 1003);
 
 	PlaySound(TEXT("BG-Music3.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 

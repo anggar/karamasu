@@ -5,13 +5,9 @@ class AboutButton :
 {
 
 public:
-	/*wxBitmap *aboutButtonImage;
-	wxBitmap *aboutButtonImageHover;*/
-
 	AboutButton();
+	AboutButton(wxWindow *parent);
 	~AboutButton();
-	virtual bool checkMouse(int x, int y);
-	virtual void DrawButton(wxPaintDC &pdc);
-
+	virtual void LoadImages();
 };
 

@@ -5,12 +5,10 @@ class ExitButton :
 	public Button
 {
 public:
-	/*wxBitmap *exitButtonImage;
-	wxBitmap *exitButtonImageHover;*/
 	
 	ExitButton();
+	ExitButton(wxWindow *parent);
 	~ExitButton();
-	virtual bool checkMouse(int x, int y);
-	virtual void DrawButton(wxPaintDC &pdc);
+	virtual void LoadImages();
 };
 

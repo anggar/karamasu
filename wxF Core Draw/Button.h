@@ -1,17 +1,26 @@
 #pragma once
 #include "wx/wx.h"
+#include "wx/stdpaths.h"
+#include "wx/filename.h"
 
 class Button
 {
-public:
+protected:
 	wxBitmap *buttonImage;
 	wxBitmap *buttonImageHover;
+	wxBitmapButton *button;
+	int width, height, x, y;
+	wxWindow *parent;
+	wxStandardPaths &stdPaths = wxStandardPaths::Get();
+	wxString fileLocation = stdPaths.GetExecutablePath();
+	virtual void LoadImages() = 0;
+
+public:
 
 	Button();
+	Button(wxWindow *window);
 	~Button();
-	virtual bool checkMouse(int x, int y) = 0;
-	virtual void DrawButton(wxPaintDC &pdc) = 0;
 	
-	int width, height, x, y;
+	void SetButton(int x, int y, int ID);
 };
 

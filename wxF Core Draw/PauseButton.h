@@ -6,8 +6,8 @@ class PauseButton :
 {
 public:
 	PauseButton();
+	PauseButton(wxWindow *parent);
 	~PauseButton();
-	virtual bool checkMouse(int x, int y);
-	virtual void DrawButton(wxPaintDC &pdc);
+	virtual void LoadImages();
 };
 

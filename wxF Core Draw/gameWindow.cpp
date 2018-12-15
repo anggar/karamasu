@@ -36,13 +36,11 @@ GameWindow::GameWindow(SwitchFrame *parent)
 	wxImage::AddHandler(jpgHandler);
 
 	// -- Back Button -- //
-	back = new BackButton(2);
-	backButton = new wxBitmapButton(this, 1001, *(back->buttonImage), wxPoint(back->x, back->y), wxDefaultSize, wxBORDER_NONE);
-	backButton->SetBitmapCurrent(*(back->buttonImageHover));
+	back = new BackButton(this, 2);
+	back->SetButton(10, 15, 1001);
 
-	pause = new PauseButton();
-	pauseButton = new wxBitmapButton(this, 1002, *(pause->buttonImage), wxPoint(pause->x, pause->y), wxDefaultSize, wxBORDER_NONE);
-	pauseButton->SetBitmapCurrent(*(pause->buttonImageHover));
+	pause = new PauseButton(this);
+	pause->SetButton(230, 15, 1002);
 
 	wxClientDC dc(this);
 

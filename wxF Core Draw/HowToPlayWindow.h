@@ -20,8 +20,6 @@ private:
 	wxBitmap *logoImg;
 	wxBitmap *sprites;
 
-	wxBitmapButton *backButton;
-
 	Button *back;
 
 };
