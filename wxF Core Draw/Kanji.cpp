@@ -12,10 +12,11 @@ Kanji::Kanji()
 	int idx = rand() % LIMIT;
 
 	wxString rad = radicalSelection->at(idx);
+	this->radical = rad;
 	char unrep[4];
 	memcpy(unrep, rad.mb_str(wxConvUTF8).data(), LIMIT);
 	sprintf(sql, "SELECT kan, meaning FROM KanjiRadical WHERE rad = CAST(x'%hhX%hhX%hhX' AS TEXT) ORDER BY RANDOM() LIMIT 1;", unrep[0], unrep[1], unrep[2]);
-	
+
 	LoadDB(Kanji::SetRandomKanji, sql, this);
 }
 
@@ -41,6 +42,11 @@ int Kanji::SetRandomRadical() {
 	std::vector<wxString> *radicalSelection = new std::vector<wxString>;
 	LoadDB(Kanji::SetRadicalSelection, "SELECT rad FROM KanjiRadical GROUP BY rad HAVING COUNT(*) > 36 ORDER BY RANDOM() LIMIT 4;");
 	return 0;
+}
+
+wxString Kanji::GetRadical()
+{
+	return this->radical;
 }
 
 

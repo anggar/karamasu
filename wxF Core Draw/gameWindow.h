@@ -24,6 +24,7 @@ public:
 private:
 	wxTimer *timer;
 	wxBitmap *backgroundImage = nullptr;
+	wxBitmap *timerBackground = nullptr;
 	SwitchFrame *switchFrame;
 	Button *back;
 	Button *pause;
@@ -34,7 +35,8 @@ private:
 	char scoreArr[4] = { '0','0','0','0' };
 	int score = 0;
 	int TIME_LIMIT = 300;
-	int timerCount;
- 	wxDECLARE_EVENT_TABLE();
+	wxStandardPaths &stdPaths = wxStandardPaths::Get();
+	wxString fileLocation = stdPaths.GetExecutablePath();
+	wxDECLARE_EVENT_TABLE();
 };
 

@@ -14,6 +14,7 @@ public:
 	wxString GetChar();
 	void SetChar(wxString utf);
 	static int SetRandomRadical();
+	wxString GetRadical();
 	void RandomKanjiFromRadical(wxString radical);
 	static std::vector<wxString> *radicalSelection;
 private:

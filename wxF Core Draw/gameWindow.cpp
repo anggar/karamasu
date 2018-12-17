@@ -45,6 +45,7 @@ GameWindow::GameWindow(SwitchFrame *parent)
 	wxClientDC dc(this);
 
 	Kanji::SetRandomRadical();
+	Box::PopulateIndex();
 	
 	this->LoadImageBackground();
 	
@@ -65,12 +66,15 @@ GameWindow::GameWindow(SwitchFrame *parent)
 }
 
 void GameWindow::LoadImageBackground() {
-	wxStandardPaths &stdPaths = wxStandardPaths::Get();
-	wxString fileLocation = stdPaths.GetExecutablePath();
-	fileLocation = wxFileName(fileLocation).GetPath() + wxT("\\..\\Asset\\BG_YAMA_01.jpg");
+	fileLocation = wxFileName(fileLocation).GetPath() + wxT("\\..\\Asset\\BG_GRAD_02.jpg");
 	wxImage image(fileLocation, wxBITMAP_TYPE_JPEG);
 
 	this->backgroundImage = new wxBitmap(image);
+	
+	fileLocation = wxFileName(fileLocation).GetPath() + wxT("\\..\\Asset\\TimerBox.png");
+	wxImage timerBG(fileLocation, wxBITMAP_TYPE_PNG);
+
+	this->timerBackground = new wxBitmap(timerBG); 
 }
 
 void GameWindow::UpdateScore(int num)
@@ -120,8 +124,7 @@ void GameWindow::OnTimer(wxTimerEvent &event) {
 	wxClientDC dc(this);
 
 	dc.SetPen(*wxBLACK_PEN);
-	dc.SetBrush(*wxWHITE_BRUSH);
-	dc.DrawRoundedRectangle(wxPoint(10 + 110, 15), wxSize(105, 60), 5);
+	dc.DrawBitmap(*timerBackground, wxPoint(10 + 110, 15), true);
 	dc.SetFont(wxFont(20, wxFONTFAMILY_DEFAULT, wxNORMAL, wxNORMAL, false, wxT("Impact")));
 	dc.DrawText(wxString::Format(wxT("%02d : %02d"), (TIME_LIMIT)/60, (TIME_LIMIT)%60), wxPoint(137, 28));
 	TIME_LIMIT--;
@@ -141,24 +144,25 @@ void GameWindow::OnPaint(wxPaintEvent &event) {
 	}
 
 	// DRAWING THE RADICAL HELPER
-	pdc.SetPen(*wxBLACK_PEN);
+	pdc.SetPen(wxPen(wxColour(*wxBLACK), 3, wxPENSTYLE_SOLID));
 	pdc.SetFont(wxFont(24, wxFONTFAMILY_DEFAULT, wxNORMAL, wxNORMAL, false, wxT("MS Gothic")));
 
 	pdc.SetBrush(*wxWHITE_BRUSH);
 	for (int i = 0; i < 3; i++) {
-		pdc.DrawRoundedRectangle(wxPoint(10+110*i, 420), wxSize(105, 60), 5);
+		pdc.DrawRectangle(wxPoint(10+110*i, 420), wxSize(105, 60));
 	}
 
 	pdc.SetBrush(wxBrush(wxColour(0xAE, 0xE2, 0x83, 50), wxBRUSHSTYLE_CROSSDIAG_HATCH));
 	for (int i = 0; i < 3; i++) {
-		pdc.DrawRoundedRectangle(wxPoint(10+110*i, 420), wxSize(105, 60), 5);
+		pdc.DrawRectangle(wxPoint(10+110*i, 420), wxSize(105, 60));
 		pdc.DrawText(Kanji::radicalSelection->at(i), wxPoint(48+110*i, 432));
 	}
 	
 	// -- DRAWING THE SCORE -- //
+	pdc.SetPen(*wxBLACK_PEN);
 	pdc.SetBrush(*wxWHITE_BRUSH);
 	pdc.SetFont(wxFont(15, wxFONTFAMILY_DEFAULT, wxNORMAL, wxNORMAL, false, wxT("Road Rage")));
-	pdc.DrawRoundedRectangle(wxPoint(10, 500),wxSize(325, 80),5);
+	pdc.DrawRoundedRectangle(wxPoint(10, 500),wxSize(325, 90),5);
 	pdc.DrawText(wxT("SCORE"), wxPoint(140, 505));
 	
 	wxString n = "";
@@ -190,35 +194,62 @@ void GameWindow::OnMouseEvent(wxMouseEvent &event) {
 	wxClientDC dc(this);
 	int curstate = 0;
 
-	dc.SetBrush(*wxWHITE_BRUSH);
-
 	BoxArray prevBoxes = *(this->boxes);
 
-	int pos_x = (event.GetPosition().x - 10) / 55;
-	int pos_y = (event.GetPosition().y - 80) / 55;
+	int pos_x = (event.GetX() - 10) / 55;
+	int pos_y = (event.GetY() - 90) / 55;
 
-	for (int i = 0; i < 6; i++) {
-		for (int j = 0; j < 6; j++) {
-			this->boxes->Item(i).Item(j).ChangeState(0);
+	if (event.Dragging() || event.LeftDown()) {
+		curstate = 2;
+	}
+	else if(event.LeftUp()) {
+		Box::ResetBoxState();
+		for (int i = 0; i < 6; i++) {
+			for (int j = 0; j < 6; j++) {
+				this->boxes->Item(i).Item(j).ChangeState(0);
+			}
 		}
 	}
 
-	if (event.Moving()) {
-		curstate = 0;
-	}
-	else if (event.Dragging() || event.LeftDown()) {
-		curstate = 2;
-	}
-
+	int distanceSum = 0;
 	if ((pos_x < 6 && pos_x >= 0) && (pos_y < 6 && pos_y >= 0)) {
-		if(curstate !=  2) curstate = 1;
-		this->boxes->Item(pos_x).Item(pos_y).ChangeState(curstate);
+		if (event.GetY() < 90) curstate = 0;
+
+		// Hover
+		if (curstate != 2) {
+			this->boxes->Item(pos_x).Item(pos_y).ChangeState(1);
+		}
+		else if (curstate != prevBoxes[pos_x][pos_y].GetState()) { // curstate expected to be 2
+			distanceSum =
+				(pos_x - 1 >= 0 ? this->boxes->Item(pos_x - 1).Item(pos_y).GetState() : 0) +
+				(pos_x + 1 < 6 ? this->boxes->Item(pos_x + 1).Item(pos_y).GetState() : 0) +
+				(pos_y - 1 >= 0 ? this->boxes->Item(pos_x).Item(pos_y - 1).GetState() : 0) +
+				(pos_y + 1 < 6 ? this->boxes->Item(pos_x).Item(pos_y + 1).GetState() : 0);
+
+			if (Box::curRadical == wxT("")) {
+				this->boxes->Item(pos_x).Item(pos_y).CreateConnection();
+			}
+
+			if (distanceSum > 0 && 
+				Box::curRadical == this->boxes->Item(pos_x).Item(pos_y).GetRadical()) {
+				this->boxes->Item(pos_x).Item(pos_y).ChangeState(2);
+				int *boxxi = Box::boxList->GetLast()->GetData();
+				int boxxx = *boxxi / 6;
+				int boxxy = *boxxi % 6;
+				this->boxes->Item(pos_x).Item(pos_y).Connect(
+					&(this->boxes->Item(boxxx).Item(boxxy)));
+			}
+		}
 	}
 
+	// Refresh for changed states
 	for (int i = 0; i < 6; i++) {
 		for (int j = 0; j < 6; j++) {
+			if (((pos_x != i) || (pos_y != i)) && this->boxes->Item(i).Item(j).GetState() == 1)
+				this->boxes->Item(i).Item(j).ChangeState(0);
+
 			if (this->boxes->Item(i).Item(j).GetState() != prevBoxes[i][j].GetState()) {
-				RefreshRect(wxRect(wxPoint(10 + 55*i, 80 + 55*j), wxSize(50, 50)), false);
+				RefreshRect(wxRect(wxPoint(10 + 55 * i, 90 + 55 * j), wxSize(50, 50)), false);
 			}
 		}
 	}
