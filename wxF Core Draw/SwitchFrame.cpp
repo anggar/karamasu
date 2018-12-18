@@ -79,6 +79,7 @@ void SwitchFrame::ShowTimeOver(int numScore)
 {
 	this->mainWindow->Show(false);
 	this->GameWindows->Show(false);
+	this->GameWindows->ResetGameState();
 	this->HowWindow->Show(false);
 	this->timeOver->SetScore(numScore);
 	this->timeOver->Show(true);

@@ -95,6 +95,10 @@ void GameWindow::OnTimer(wxTimerEvent &event) {
 		
 	wxClientDC dc(this);
 
+	if (TIME_LIMIT <= 0) {
+		this->switchFrame->ShowTimeOver(this->score);
+	}
+
 	dc.SetPen(*wxBLACK_PEN);
 	dc.DrawBitmap(*timerBackground, wxPoint(10 + 110, 15), true);
 	dc.SetFont(wxFont(20, wxFONTFAMILY_DEFAULT, wxNORMAL, wxNORMAL, false, wxT("Impact")));
@@ -150,10 +154,36 @@ void GameWindow::OnBackClick(wxCommandEvent & event)
 
 void GameWindow::OnPauseClick(wxCommandEvent & event)
 {
+	wxClientDC dc(this);
+	dc.SetBrush(wxBrush(wxColour(0xFF, 0x7C, 0x7C),wxBRUSHSTYLE_SOLID));
+	
+	this->pauseState ^= 1;
+
+	switch (this->pauseState) {
+	case 0:
+		timer->Start(1000);
+		Refresh();
+		break;
+	case 1:
+		for (int i = 0; i < 6; i++) {
+			for (int j = 0; j < 6; j++) {
+				dc.DrawRectangle(wxPoint(10 + 55 * i, 90 + 55 * j), wxSize(50, 50));
+			}
+		}
+		timer->Stop();
+		break;
+	}
 }
 
 void GameWindow::ResetGameState()
 {
+	Kanji::SetRandomRadical();
+	for(int i=0; i<6; i++){
+		for (int j = 0; j < 6; j++) {
+			this->boxes->Item(i).Item(j).ChangeKanji();
+		}
+	}
+
 	this->score = 0;
 	this->TIME_LIMIT = 300;
 	this->timer->Start(1000);
@@ -162,6 +192,9 @@ void GameWindow::ResetGameState()
 void GameWindow::OnMouseEvent(wxMouseEvent &event) {
 	wxClientDC dc(this);
 	int curstate = 0;
+
+	if (pauseState == 1)
+		return;
 
 	BoxArray prevBoxes = *(this->boxes);
 

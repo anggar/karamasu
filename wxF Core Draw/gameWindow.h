@@ -34,6 +34,7 @@ private:
 	void UpdateScore(int num);
 	int score = 0;
 	int TIME_LIMIT = 300;
+	int pauseState = 0;
 	wxStandardPaths &stdPaths = wxStandardPaths::Get();
 	wxString fileLocation = stdPaths.GetExecutablePath();
 	wxDECLARE_EVENT_TABLE();

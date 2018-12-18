@@ -36,7 +36,7 @@ TimeOverWindow::~TimeOverWindow()
 
 void TimeOverWindow::OnBackClick(wxCommandEvent & event)
 {
-
+	this->switchFrame->ShowMainWindow();
 }
 
 void TimeOverWindow::OnPaint(wxPaintEvent & event)
