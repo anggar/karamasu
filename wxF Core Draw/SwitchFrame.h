@@ -4,6 +4,7 @@
 class MainWindow;
 class GameWindow;
 class HowToPlayWindow;
+class TimeOverWindow;
 
 class SwitchFrame :
 	public wxFrame
@@ -13,6 +14,7 @@ private:
 	MainWindow *mainWindow;
 	GameWindow *GameWindows;
 	HowToPlayWindow *HowWindow;
+	TimeOverWindow *timeOver;
 
 	void fitWindowSize();
 
@@ -22,6 +24,7 @@ public:
 	void ShowMainWindow();
 	void ShowGameWindow();
 	void ShowHowToPlayWIndow();
+	void ShowTimeOver(int numScore);
 	~SwitchFrame();
 };
 

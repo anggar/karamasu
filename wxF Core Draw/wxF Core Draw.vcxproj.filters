@@ -16,6 +16,7 @@
     <ClCompile Include="HowToPlayWindow.cpp" />
     <ClCompile Include="BackButton.cpp" />
     <ClCompile Include="PauseButton.cpp" />
+    <ClCompile Include="TimeOverWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameWindow.h" />
@@ -33,5 +34,6 @@
     <ClInclude Include="HowToPlayWindow.h" />
     <ClInclude Include="BackButton.h" />
     <ClInclude Include="PauseButton.h" />
+    <ClInclude Include="TimeOverWindow.h" />
   </ItemGroup>
 </Project>

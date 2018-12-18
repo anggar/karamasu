@@ -2,6 +2,7 @@
 #include "MainWindow.h"
 #include "GameWindow.h"
 #include "HowToPlayWindow.h"
+#include "TimeOverWindow.h"
 
 void SwitchFrame::fitWindowSize()
 {
@@ -33,6 +34,10 @@ void SwitchFrame::InitComponents()
 	this->HowWindow = new HowToPlayWindow(this);
 	this->HowWindow->Show(false);
 	this->boxSizer->Add(HowWindow, 1, wxEXPAND, 0);
+	
+	this->timeOver = new TimeOverWindow(this);
+	this->timeOver->Show(false);
+	this->boxSizer->Add(timeOver, 1, wxEXPAND, 0);
 
 	SetSizer(boxSizer);
 
@@ -44,6 +49,7 @@ void SwitchFrame::ShowMainWindow()
 	this->mainWindow->Show(true);
 	this->GameWindows->Show(false);
 	this->HowWindow->Show(false);
+	this->timeOver->Show(false);
 
 	fitWindowSize();
 }
@@ -54,6 +60,7 @@ void SwitchFrame::ShowGameWindow()
 	this->GameWindows->Show(true);
 	this->GameWindows->ResetGameState();
 	this->HowWindow->Show(false);
+	this->timeOver->Show(false);
 
 	fitWindowSize();
 }
@@ -63,6 +70,18 @@ void SwitchFrame::ShowHowToPlayWIndow()
 	this->mainWindow->Show(false);
 	this->GameWindows->Show(false);
 	this->HowWindow->Show(true);
+	this->timeOver->Show(false);
+
+	fitWindowSize();
+}
+
+void SwitchFrame::ShowTimeOver(int numScore)
+{
+	this->mainWindow->Show(false);
+	this->GameWindows->Show(false);
+	this->HowWindow->Show(false);
+	this->timeOver->SetScore(numScore);
+	this->timeOver->Show(true);
 
 	fitWindowSize();
 }

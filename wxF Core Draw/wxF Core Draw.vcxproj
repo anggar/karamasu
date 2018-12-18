@@ -34,6 +34,7 @@
     <ClCompile Include="PauseButton.cpp" />
     <ClCompile Include="PlayButton.cpp" />
     <ClCompile Include="SwitchFrame.cpp" />
+    <ClCompile Include="TimeOverWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AboutButton.h" />
@@ -51,6 +52,7 @@
     <ClInclude Include="PlayButton.h" />
     <ClInclude Include="sqlite3.h" />
     <ClInclude Include="SwitchFrame.h" />
+    <ClInclude Include="TimeOverWindow.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
