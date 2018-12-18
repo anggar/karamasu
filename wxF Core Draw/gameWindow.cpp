@@ -79,39 +79,11 @@ void GameWindow::LoadImageBackground() {
 
 void GameWindow::UpdateScore(int num)
 {
-	if (num > 9999) UpdateScore(9999);
-	if (0 <= num && num < 10) {
-		scoreArr[0] = scoreArr[1] = scoreArr[2] = '0';
-		scoreArr[3] = char((num % 10) + 48);
-		return;
+	if (this->score + num > 9999) {
+		this->score = 9999;
 	}
-	if (10 <= num && num < 100) {
-		scoreArr[0] = scoreArr[1] = '0';
-		scoreArr[3] = char((num % 10) + 48);
-		num /= 10;
-		scoreArr[2] = char((num % 10) + 48);
-		return;
-	}
-	if (100 <= num && num < 1000) {
-		scoreArr[0] = '0';
-		scoreArr[3] = char((num % 10) + 48);
-		num /= 10;
-		scoreArr[2] = char((num % 10) + 48);
-		num /= 10;
-		scoreArr[1] = char((num % 10) + 48);
-		num /= 10;
-		return;
-	}
-	if (1000 <= num && num < 10000) {
-		scoreArr[3] = char((num % 10) + 48);
-		num /= 10;
-		scoreArr[2] = char((num % 10) + 48);
-		num /= 10;
-		scoreArr[1] = char((num % 10) + 48);
-		num /= 10;
-		scoreArr[0] = char((num % 10) + 48);
-		num /= 10;
-		return;
+	else {
+		this->score += num;
 	}
 }
 
@@ -163,15 +135,10 @@ void GameWindow::OnPaint(wxPaintEvent &event) {
 	pdc.SetBrush(*wxWHITE_BRUSH);
 	pdc.SetFont(wxFont(15, wxFONTFAMILY_DEFAULT, wxNORMAL, wxNORMAL, false, wxT("Road Rage")));
 	pdc.DrawRoundedRectangle(wxPoint(10, 500),wxSize(325, 90),5);
-	pdc.DrawText(wxT("SCORE"), wxPoint(140, 505));
+	pdc.DrawText("SCORE", wxPoint(140, 505));
 	
-	wxString n = "";
-	n += char(scoreArr[0]);
-	n += char(scoreArr[1]);
-	n += char(scoreArr[2]);
-	n += char(scoreArr[3]);
 	pdc.SetFont(wxFont(17, wxFONTFAMILY_DEFAULT, wxNORMAL, wxBOLD, false, wxT("Impact")));
-	pdc.DrawText(n, wxPoint(145, 535));
+	pdc.DrawText(wxString::Format(wxT("%04d"), this->score), wxPoint(145, 535));
 }
 
 void GameWindow::OnBackClick(wxCommandEvent & event)
@@ -185,8 +152,10 @@ void GameWindow::OnPauseClick(wxCommandEvent & event)
 {
 }
 
-void GameWindow::StartTimer()
+void GameWindow::ResetGameState()
 {
+	this->score = 0;
+	this->TIME_LIMIT = 300;
 	this->timer->Start(1000);
 }
 
@@ -203,39 +172,45 @@ void GameWindow::OnMouseEvent(wxMouseEvent &event) {
 		curstate = 2;
 	}
 	else if(event.LeftUp()) {
-		Box::ResetBoxState();
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 6; j++) {
+				if (Box::conn >= 3 && this->boxes->Item(i).Item(j).GetState() == 2) {
+					UpdateScore(5);
+					this->boxes->Item(i).Item(j).ChangeKanji();
+					Refresh();
+				} 
 				this->boxes->Item(i).Item(j).ChangeState(0);
 			}
 		}
+
+		Box::ResetBoxState();
 	}
 
-	int distanceSum = 0;
 	if ((pos_x < 6 && pos_x >= 0) && (pos_y < 6 && pos_y >= 0)) {
 		if (event.GetY() < 90) curstate = 0;
 
 		// Hover
 		if (curstate != 2) {
-			this->boxes->Item(pos_x).Item(pos_y).ChangeState(1);
+			this->boxes->Item(pos_x).Item(pos_y).Hover();
 		}
 		else if (curstate != prevBoxes[pos_x][pos_y].GetState()) { // curstate expected to be 2
-			distanceSum =
-				(pos_x - 1 >= 0 ? this->boxes->Item(pos_x - 1).Item(pos_y).GetState() : 0) +
-				(pos_x + 1 < 6 ? this->boxes->Item(pos_x + 1).Item(pos_y).GetState() : 0) +
-				(pos_y - 1 >= 0 ? this->boxes->Item(pos_x).Item(pos_y - 1).GetState() : 0) +
-				(pos_y + 1 < 6 ? this->boxes->Item(pos_x).Item(pos_y + 1).GetState() : 0);
+			auto *boxxi = Box::boxList->GetLast();
+
+			int boxxx = -1, boxxy = -1;
+			if (boxxi) {
+				boxxx = *boxxi->GetData() / 6;
+				boxxy = *boxxi->GetData() % 6;
+			}
 
 			if (Box::curRadical == wxT("")) {
 				this->boxes->Item(pos_x).Item(pos_y).CreateConnection();
 			}
 
-			if (distanceSum > 0 && 
+			if (boxxx != -1 && boxxy != -1 && 
+				this->boxes->Item(pos_x).Item(pos_y).GetDistanceSum(
+				&(this->boxes->Item(boxxx).Item(boxxy))) == 1 && 
 				Box::curRadical == this->boxes->Item(pos_x).Item(pos_y).GetRadical()) {
 				this->boxes->Item(pos_x).Item(pos_y).ChangeState(2);
-				int *boxxi = Box::boxList->GetLast()->GetData();
-				int boxxx = *boxxi / 6;
-				int boxxy = *boxxi % 6;
 				this->boxes->Item(pos_x).Item(pos_y).Connect(
 					&(this->boxes->Item(boxxx).Item(boxxy)));
 			}
@@ -245,7 +220,7 @@ void GameWindow::OnMouseEvent(wxMouseEvent &event) {
 	// Refresh for changed states
 	for (int i = 0; i < 6; i++) {
 		for (int j = 0; j < 6; j++) {
-			if (((pos_x != i) || (pos_y != i)) && this->boxes->Item(i).Item(j).GetState() == 1)
+			if (((pos_x != i) || (pos_y != j)) && this->boxes->Item(i).Item(j).GetState() == 1)
 				this->boxes->Item(i).Item(j).ChangeState(0);
 
 			if (this->boxes->Item(i).Item(j).GetState() != prevBoxes[i][j].GetState()) {

@@ -34,7 +34,7 @@ void HowToPlayWindow::LoadImages()
 {
 	wxStandardPaths &stdPaths = wxStandardPaths::Get();
 	wxString fileLocation = stdPaths.GetExecutablePath();
-	fileLocation = wxFileName(fileLocation).GetPath() + wxT("\\..\\Asset\\BG_YAMA_03.jpg");
+	fileLocation = wxFileName(fileLocation).GetPath() + wxT("\\..\\Asset\\BG_GRAD_02.jpg");
 	wxImage image(fileLocation, wxBITMAP_TYPE_JPEG);
 
 	this->backgroundImg = new wxBitmap(image);

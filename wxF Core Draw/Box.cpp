@@ -30,6 +30,11 @@ wxString Box::GetRadical()
 	return this->kkanji->GetRadical();
 }
 
+void Box::ChangeKanji()
+{
+	this->kkanji = new Kanji();
+}
+
 void Box::PopulateIndex()
 {
 	for (int i = 0; i < 36; i++) {
@@ -68,12 +73,9 @@ void Box::Draw(wxPaintDC &dc) {
 // Convention, other for before
 void Box::Connect(Box *other)
 {
-	if (other->kkanji->GetRadical() == this->curRadical &&
-		this->GetDistanceSum(other) == 1) {
-		boxList->Append(&boxIndex[this->position.x*6 + this->position.y]);
-		this->ChangeState(2);
-		conn++;
-	}
+	boxList->Append(&boxIndex[this->position.x*6 + this->position.y]);
+	this->ChangeState(2);
+	conn++;
 }
 
 bool Box::Intersect(int x, int y)
@@ -97,6 +99,7 @@ void Box::CreateConnection()
 	this->curRadical = this->kkanji->GetRadical();
 	this->ChangeState(2);
 	boxList->Append(&boxIndex[position.x * 6 + position.y]);
+	conn = 1;
 }
 
 wxPoint Box::GetDistance(Box *other)

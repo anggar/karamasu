@@ -18,7 +18,7 @@ public:
 	void OnPaint(wxPaintEvent &event);
 	void OnBackClick(wxCommandEvent &event);
 	void OnPauseClick(wxCommandEvent &event);
-	void StartTimer();
+	void ResetGameState();
 
 	~GameWindow();
 private:
@@ -32,7 +32,6 @@ private:
 	BoxArray *boxes;
 	void LoadImageBackground();
 	void UpdateScore(int num);
-	char scoreArr[4] = { '0','0','0','0' };
 	int score = 0;
 	int TIME_LIMIT = 300;
 	wxStandardPaths &stdPaths = wxStandardPaths::Get();

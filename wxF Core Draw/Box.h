@@ -31,10 +31,10 @@ public:
 	static wxString curRadical;
 	static int boxIndex[36];
 	static BoxList* boxList;
+	static int conn;
 
 	~Box();
 private:
-	static int conn;
 	int state;
 	wxPoint position;
 	Kanji *kkanji;
